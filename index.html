@@ -1,0 +1,2045 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="theme-color" content="#006D77">
+<title>المصانع الطبية الوطنية · سلطنة عُمان</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:        #F0F4F8;
+  --bg2:       #E8EEF5;
+  --white:     #FFFFFF;
+  --border:    #D1DCE8;
+  --border2:   #B8CADE;
+  --text:      #1A2535;
+  --text2:     #3D5068;
+  --text3:     #6B829A;
+  --primary:   #006D77;
+  --primary-l: #008A96;
+  --primary-bg:#E8F5F6;
+  --primary-bd:#B2DCE0;
+  --accent:    #E29C3A;
+  --accent-l:  #F0B54F;
+  --accent-bg: #FDF3E3;
+  --blue:      #2563EB;
+  --blue-bg:   #EEF4FF;
+  --blue-bd:   #BFDBFE;
+  --red:       #DC2626;
+  --red-bg:    #FEF2F2;
+  --red-bd:    #FECACA;
+  --purple:    #7C3AED;
+  --purple-bg: #F5F0FF;
+  --purple-bd: #DDD6FE;
+  --green:     #059669;
+  --green-bg:  #ECFDF5;
+  --green-bd:  #A7F3D0;
+  --orange:    #D97706;
+  --orange-bg: #FFFBEB;
+  --orange-bd: #FDE68A;
+  --shadow-sm: 0 1px 3px rgba(0,0,0,.08), 0 1px 2px rgba(0,0,0,.05);
+  --shadow:    0 4px 12px rgba(0,0,0,.08), 0 2px 4px rgba(0,0,0,.04);
+  --shadow-lg: 0 10px 30px rgba(0,0,0,.1), 0 4px 8px rgba(0,0,0,.05);
+  --radius:    14px;
+  --radius-sm: 8px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:'Cairo',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;direction:rtl;font-size:15px}
+
+/* ── LOADING ── */
+.loading-overlay{position:fixed;inset:0;background:linear-gradient(135deg,#006D77 0%,#004F57 100%);display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;transition:opacity .6s ease}
+.loading-overlay.hidden{opacity:0;pointer-events:none}
+.loader-logo{font-size:3rem;margin-bottom:24px;animation:float 2s ease-in-out infinite}
+@keyframes float{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.loader-ring{width:56px;height:56px;border-radius:50%;border:3px solid rgba(255,255,255,.2);border-top-color:#fff;animation:spin .8s linear infinite;margin-bottom:20px}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loader-text{color:rgba(255,255,255,.9);font-size:1rem;font-weight:600;font-family:'Tajawal',sans-serif}
+.loader-status{color:rgba(255,255,255,.6);font-size:.82rem;margin-top:6px;text-align:center;padding:0 24px}
+
+/* ── ERROR ── */
+.error-banner{display:none;background:var(--red-bg);border:1px solid var(--red-bd);border-radius:var(--radius-sm);padding:14px 20px;margin:16px 32px;color:var(--red);font-size:.83rem;line-height:1.7}
+
+/* ── HEADER ── */
+.header{background:linear-gradient(135deg,#006D77 0%,#004A50 60%,#003840 100%);padding:0;position:relative;overflow:hidden}
+.header-pattern{position:absolute;inset:0;opacity:.06;background-image:radial-gradient(circle at 20% 50%,#fff 1px,transparent 1px),radial-gradient(circle at 80% 20%,#fff 1px,transparent 1px);background-size:40px 40px}
+.header-inner{position:relative;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:16px;padding:24px 36px}
+.header-brand{display:flex;align-items:center;gap:16px}
+.logo-box{width:52px;height:52px;background:rgba(255,255,255,.15);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.25);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0}
+.brand-text{}
+.brand-title{font-family:'Tajawal',sans-serif;font-size:1.4rem;font-weight:800;color:#fff;line-height:1.1;letter-spacing:-.01em}
+.brand-sub{font-size:.75rem;color:rgba(255,255,255,.65);font-weight:400;margin-top:3px}
+.header-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.live-pill{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.2);border-radius:20px;padding:6px 14px;font-size:.75rem;color:rgba(255,255,255,.9)}
+.live-dot{width:6px;height:6px;border-radius:50%;background:#4ade80;animation:pulse 2s infinite;flex-shrink:0}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.5;transform:scale(1.4)}}
+.date-pill{background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.15);border-radius:20px;padding:6px 14px;font-size:.73rem;color:rgba(255,255,255,.7)}
+.refresh-btn{display:flex;align-items:center;gap:6px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:20px;padding:6px 16px;font-size:.78rem;color:#fff;cursor:pointer;font-family:'Cairo',sans-serif;font-weight:600;transition:all .2s}
+.refresh-btn:hover{background:rgba(255,255,255,.25)}
+.refresh-btn.spinning .ri{animation:spin .7s linear infinite;display:inline-block}
+.migrate-btn{display:flex;align-items:center;gap:5px;background:linear-gradient(135deg,rgba(251,191,36,.2),rgba(245,158,11,.15));border:1px solid rgba(251,191,36,.4);border-radius:20px;padding:6px 14px;font-size:.75rem;color:#fbbf24;cursor:pointer;font-family:'Cairo',sans-serif;font-weight:700;transition:all .2s;white-space:nowrap}
+.migrate-btn:hover{background:linear-gradient(135deg,rgba(251,191,36,.35),rgba(245,158,11,.25));border-color:#fbbf24}
+.migrate-btn:disabled{opacity:.5;cursor:not-allowed}
+
+/* ── MIGRATE PANEL ── */
+.migrate-overlay{position:fixed;inset:0;background:rgba(0,0,0,.6);backdrop-filter:blur(6px);z-index:9500;display:flex;align-items:center;justify-content:center;padding:20px;opacity:0;pointer-events:none;transition:opacity .3s}
+.migrate-overlay.open{opacity:1;pointer-events:all}
+.migrate-panel{background:#0f172a;border:1px solid #334155;border-radius:20px;width:100%;max-width:560px;overflow:hidden;box-shadow:0 24px 60px rgba(0,0,0,.5);transform:translateY(16px) scale(.97);transition:transform .3s}
+.migrate-overlay.open .migrate-panel{transform:translateY(0) scale(1)}
+.mp-header{background:linear-gradient(135deg,#f59e0b,#d97706);padding:18px 22px;display:flex;align-items:center;justify-content:space-between}
+.mp-title{font-family:'Tajawal',sans-serif;font-size:1rem;font-weight:800;color:#fff}
+.mp-close{background:rgba(255,255,255,.2);border:none;border-radius:50%;width:30px;height:30px;color:#fff;font-size:1rem;cursor:pointer;display:flex;align-items:center;justify-content:center}
+.mp-body{padding:20px 22px}
+.mp-desc{font-size:.8rem;color:#64748b;margin-bottom:16px;line-height:1.6;background:rgba(251,191,36,.06);border:1px solid rgba(251,191,36,.15);border-radius:8px;padding:10px 12px}
+.mp-sheet{display:flex;align-items:center;gap:10px;padding:9px 12px;background:#1e293b;border-radius:9px;margin-bottom:6px;border:1px solid #334155}
+.mp-sheet-name{flex:1;font-size:.82rem;font-weight:600;color:#e2e8f0}
+.mp-status{font-size:.7rem;padding:2px 9px;border-radius:10px;font-weight:700;white-space:nowrap}
+.mps-wait{background:rgba(100,116,139,.15);color:#64748b}
+.mps-run{background:rgba(251,191,36,.12);color:#fbbf24}
+.mps-ok{background:rgba(34,197,94,.12);color:#4ade80}
+.mps-err{background:rgba(239,68,68,.12);color:#f87171}
+.mp-progress{background:#1e293b;border-radius:6px;height:6px;overflow:hidden;margin:14px 0}
+.mp-progress-bar{height:100%;background:linear-gradient(90deg,#f59e0b,#fbbf24);border-radius:6px;width:0%;transition:width .4s ease}
+.mp-log{background:#020617;border-radius:8px;padding:12px;font-size:.72rem;color:#64748b;font-family:monospace;max-height:120px;overflow-y:auto;direction:ltr;text-align:left;margin-bottom:14px;line-height:1.8}
+.mp-log .lok{color:#4ade80}.mp-log .lerr{color:#f87171}.mp-log .linfo{color:#60a5fa}
+.mp-go{width:100%;padding:12px;border-radius:10px;border:none;background:linear-gradient(135deg,#f59e0b,#d97706);color:#fff;font-family:'Cairo',sans-serif;font-size:.9rem;font-weight:700;cursor:pointer;transition:all .2s;box-shadow:0 4px 16px rgba(245,158,11,.3)}
+.mp-go:hover{transform:translateY(-2px);box-shadow:0 6px 24px rgba(245,158,11,.4)}
+.mp-go:disabled{opacity:.5;cursor:not-allowed;transform:none}
+
+/* ── TABS ── */
+.tabs-bar{background:var(--white);border-bottom:2px solid var(--border);padding:0 36px;display:flex;gap:0;overflow-x:auto;box-shadow:var(--shadow-sm)}
+.tabs-bar::-webkit-scrollbar{height:0}
+.tab-btn{padding:14px 20px;background:none;border:none;border-bottom:3px solid transparent;margin-bottom:-2px;color:var(--text3);font-family:'Cairo',sans-serif;font-size:.82rem;font-weight:600;cursor:pointer;transition:all .2s;white-space:nowrap;display:flex;align-items:center;gap:6px}
+.tab-btn:hover{color:var(--primary);background:var(--primary-bg)}
+.tab-btn.active{color:var(--primary);border-bottom-color:var(--primary);font-weight:700}
+.tab-count{background:var(--primary-bg);color:var(--primary);border-radius:10px;padding:1px 7px;font-size:.68rem;font-weight:700}
+.tab-btn.active .tab-count{background:var(--primary);color:#fff}
+
+/* ── MAIN ── */
+.main{padding:28px 36px;max-width:1440px;margin:0 auto}
+
+/* ── KPI CARDS ── */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:14px;margin-bottom:28px}
+.kpi-card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow-sm);transition:all .25s;cursor:default;position:relative;overflow:hidden}
+.kpi-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-lg)}
+.kpi-stripe{position:absolute;top:0;right:0;width:4px;height:100%;border-radius:0 var(--radius) var(--radius) 0}
+.kpi-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:12px}
+.kpi-icon-box{width:42px;height:42px;border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:1.3rem;flex-shrink:0}
+.kpi-value{font-family:'Tajawal',sans-serif;font-size:2.4rem;font-weight:800;line-height:1;margin-bottom:4px}
+.kpi-label{font-size:.78rem;color:var(--text3);font-weight:500}
+.kpi-trend{font-size:.7rem;color:var(--text3);margin-top:6px;display:flex;align-items:center;gap:4px}
+
+.kpi-card.c-teal .kpi-stripe{background:var(--primary)}
+.kpi-card.c-teal .kpi-icon-box{background:var(--primary-bg)}
+.kpi-card.c-teal .kpi-value{color:var(--primary)}
+.kpi-card.c-gold .kpi-stripe{background:var(--orange)}
+.kpi-card.c-gold .kpi-icon-box{background:var(--orange-bg)}
+.kpi-card.c-gold .kpi-value{color:var(--orange)}
+.kpi-card.c-blue .kpi-stripe{background:var(--blue)}
+.kpi-card.c-blue .kpi-icon-box{background:var(--blue-bg)}
+.kpi-card.c-blue .kpi-value{color:var(--blue)}
+.kpi-card.c-red .kpi-stripe{background:var(--red)}
+.kpi-card.c-red .kpi-icon-box{background:var(--red-bg)}
+.kpi-card.c-red .kpi-value{color:var(--red)}
+.kpi-card.c-purple .kpi-stripe{background:var(--purple)}
+.kpi-card.c-purple .kpi-icon-box{background:var(--purple-bg)}
+.kpi-card.c-purple .kpi-value{color:var(--purple)}
+.kpi-card.c-green .kpi-stripe{background:var(--green)}
+.kpi-card.c-green .kpi-icon-box{background:var(--green-bg)}
+.kpi-card.c-green .kpi-value{color:var(--green)}
+
+/* ── CHARTS ROW ── */
+.charts-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px}
+@media(max-width:860px){.charts-row{grid-template-columns:1fr}}
+.card{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);padding:22px;box-shadow:var(--shadow-sm)}
+.card-title{font-family:'Tajawal',sans-serif;font-size:.92rem;font-weight:700;color:var(--text2);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.card-title-line{width:3px;height:16px;border-radius:2px;background:var(--primary);flex-shrink:0}
+
+.bar-list{display:flex;flex-direction:column;gap:10px}
+.bar-header{display:flex;justify-content:space-between;margin-bottom:4px;font-size:.78rem}
+.bar-label{color:var(--text2);font-weight:500}
+.bar-count{color:var(--text3);font-weight:700;background:var(--bg);padding:1px 8px;border-radius:6px;font-size:.72rem}
+.bar-track{height:8px;background:var(--bg2);border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;border-radius:4px;transition:width 1s ease}
+
+/* ── DONUT ── */
+.donut-wrap{display:flex;align-items:center;gap:20px;flex-wrap:wrap}
+.donut-legend{flex:1;display:flex;flex-direction:column;gap:9px;min-width:120px}
+.legend-item{display:flex;align-items:center;gap:9px;font-size:.78rem}
+.legend-dot{width:10px;height:10px;border-radius:3px;flex-shrink:0}
+.legend-name{flex:1;color:var(--text2);font-weight:500}
+.legend-pct{font-weight:700;color:var(--text);background:var(--bg);padding:1px 8px;border-radius:6px;font-size:.72rem}
+
+/* ── SECTION TITLE ── */
+.section-title{font-family:'Tajawal',sans-serif;font-size:1rem;font-weight:700;color:var(--text);margin-bottom:14px;display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+.s-badge{background:var(--primary-bg);border:1px solid var(--primary-bd);color:var(--primary);border-radius:20px;padding:2px 10px;font-size:.72rem;font-weight:700}
+
+/* ── FILTER BAR ── */
+.filter-bar{background:var(--white);border:1px solid var(--border);border-radius:var(--radius-sm);padding:14px 18px;margin-bottom:12px;display:flex;flex-wrap:wrap;gap:14px;align-items:flex-start;box-shadow:var(--shadow-sm)}
+.filter-group{display:flex;flex-direction:column;gap:7px}
+.filter-group-label{font-size:.67rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em}
+.btn-group{display:flex;flex-wrap:wrap;gap:5px}
+.filter-btn{padding:5px 13px;border-radius:20px;border:1.5px solid var(--border);background:var(--bg);color:var(--text3);font-family:'Cairo',sans-serif;font-size:.76rem;font-weight:600;cursor:pointer;transition:all .15s;white-space:nowrap}
+.filter-btn:hover{border-color:var(--primary);color:var(--primary);background:var(--primary-bg)}
+.f-all{background:var(--bg2);border-color:var(--border2);color:var(--text2)}
+.f-pharma{background:var(--blue-bg);border-color:var(--blue-bd);color:var(--blue)}
+.f-medical{background:var(--green-bg);border-color:var(--green-bd);color:var(--green)}
+.f-vet{background:var(--purple-bg);border-color:var(--purple-bd);color:var(--purple)}
+.f-raw{background:var(--orange-bg);border-color:var(--orange-bd);color:var(--orange)}
+.f-year{background:var(--primary-bg);border-color:var(--primary-bd);color:var(--primary)}
+.results-count{font-size:.73rem;color:var(--text3);padding:4px 11px;background:var(--bg);border:1px solid var(--border);border-radius:20px;align-self:flex-end;margin-right:auto}
+.results-count span{color:var(--primary);font-weight:700}
+
+/* ── SEARCH ── */
+.search-wrap{position:relative;margin-bottom:12px}
+.search-icon{position:absolute;right:14px;top:50%;transform:translateY(-50%);color:var(--text3);font-size:.9rem;pointer-events:none}
+.search-input{width:100%;background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:10px 40px 10px 14px;color:var(--text);font-family:'Cairo',sans-serif;font-size:.83rem;outline:none;transition:border-color .2s,box-shadow .2s;box-shadow:var(--shadow-sm)}
+.search-input:focus{border-color:var(--primary);box-shadow:0 0 0 3px rgba(0,109,119,.1)}
+.search-input::placeholder{color:var(--text3)}
+
+/* ── TABLE ── */
+.table-wrap{background:var(--white);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:20px;box-shadow:var(--shadow-sm);overflow-x:auto;direction:rtl;max-width:100%}
+table{width:100%;border-collapse:collapse;table-layout:fixed;direction:rtl}
+thead{background:linear-gradient(135deg,var(--primary) 0%,var(--primary-l) 100%)}
+th{padding:11px 12px;text-align:right;font-size:.75rem;font-weight:700;color:#fff;letter-spacing:.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+th:first-child{width:46px;min-width:46px;text-align:center}
+tbody tr{border-bottom:1px solid var(--border);transition:background .15s}
+tbody tr:last-child{border-bottom:none}
+tbody tr:hover{background:var(--primary-bg)}
+td{padding:10px 12px;font-size:.79rem;color:var(--text2);vertical-align:top;line-height:1.65;white-space:pre-wrap;word-break:break-word;overflow-wrap:anywhere}
+td:first-child{color:var(--text3);font-size:.74rem;font-weight:700;white-space:nowrap;width:46px;min-width:46px;max-width:46px;text-align:center;overflow:hidden}
+td:nth-child(2){font-weight:600;color:var(--text)}
+td.col-long{font-size:.76rem;color:var(--text3)}
+.no-results{text-align:center;padding:36px;color:var(--text3);font-size:.88rem}
+
+/* ── BADGES ── */
+.type-badge{display:inline-block;border-radius:6px;padding:2px 9px;font-size:.7rem;font-weight:700;white-space:nowrap;letter-spacing:.01em}
+.badge-pharma{background:var(--blue-bg);color:var(--blue);border:1px solid var(--blue-bd)}
+.badge-medical{background:var(--green-bg);color:var(--green);border:1px solid var(--green-bd)}
+.badge-vet{background:var(--purple-bg);color:var(--purple);border:1px solid var(--purple-bd)}
+.badge-raw{background:var(--orange-bg);color:var(--orange);border:1px solid var(--orange-bd)}
+.badge-bio{background:var(--red-bg);color:var(--red);border:1px solid var(--red-bd)}
+.badge-other{background:var(--bg2);color:var(--text3);border:1px solid var(--border)}
+
+/* ── TIMELINE ── */
+.timeline{position:relative;padding-right:28px}
+.timeline::before{content:'';position:absolute;right:9px;top:8px;bottom:8px;width:2px;background:linear-gradient(to bottom,var(--primary),var(--primary-bd))}
+.tl-item{position:relative;margin-bottom:12px;padding:14px 18px;background:var(--white);border:1px solid var(--border);border-radius:var(--radius-sm);box-shadow:var(--shadow-sm);transition:all .2s}
+.tl-item:hover{border-color:var(--primary-bd);box-shadow:var(--shadow)}
+.tl-item::before{content:'';position:absolute;right:-23px;top:18px;width:12px;height:12px;border-radius:50%;background:var(--primary);border:3px solid var(--white);box-shadow:0 0 0 2px var(--primary-bd)}
+.tl-date{font-size:.69rem;color:var(--primary);font-weight:700;margin-bottom:3px;display:flex;align-items:center;gap:5px}
+.tl-name{font-size:.85rem;font-weight:700;color:var(--text);margin-bottom:4px}
+.tl-meta{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:4px}
+.tl-loc{font-size:.72rem;color:var(--text3);display:flex;align-items:center;gap:3px}
+.tl-extra{font-size:.72rem;color:var(--text3);margin-top:5px;padding-top:5px;border-top:1px dashed var(--border)}
+
+/* ── LOCATION GRID ── */
+.location-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:10px}
+.loc-card{background:var(--white);border:1.5px solid var(--border);border-radius:var(--radius-sm);padding:16px 14px;text-align:center;transition:all .2s;cursor:default}
+.loc-card:hover{border-color:var(--primary);box-shadow:var(--shadow);transform:translateY(-2px)}
+.loc-num{font-family:'Tajawal',sans-serif;font-size:2rem;font-weight:800;color:var(--primary);line-height:1}
+.loc-name{font-size:.73rem;color:var(--text3);margin-top:4px;font-weight:500}
+
+/* ── TAB CONTENT ── */
+.tab-content{display:none;animation:fadeIn .3s ease}
+.tab-content.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── STATUS BADGE ── */
+.status-active{background:#ECFDF5;color:#059669;border:1px solid #A7F3D0;border-radius:6px;padding:2px 9px;font-size:.7rem;font-weight:700}
+.status-inactive{background:#FEF2F2;color:#DC2626;border:1px solid #FECACA;border-radius:6px;padding:2px 9px;font-size:.7rem;font-weight:700}
+
+/* ── MAP ── */
+.gov-region{cursor:pointer;transition:all .2s}
+.gov-path{stroke:#fff;stroke-width:0.8;stroke-linejoin:round;transition:filter .25s,opacity .25s}
+.gov-region:hover .gov-path{filter:brightness(0.85);stroke-width:1.5}
+.gov-region.active .gov-path{filter:brightness(0.75);stroke:#fff;stroke-width:2}
+.gov-bubble{position:absolute;background:#006D77;color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Tajawal',sans-serif;font-weight:800;font-size:.75rem;box-shadow:0 2px 8px rgba(0,109,119,.4);cursor:pointer;transition:transform .2s;border:2px solid #fff;pointer-events:none}
+.gov-bar{display:flex;align-items:center;gap:7px;padding:6px 10px;border-radius:8px;cursor:pointer;transition:background .15s;border:1px solid transparent}
+.gov-bar:hover{background:var(--primary-bg)}
+.gov-bar.selected{background:var(--primary-bg);border:1px solid var(--primary-bd)}
+.gov-bar-name{font-size:.78rem;font-weight:600;color:var(--text2);flex:1}
+.gov-bar-count{font-family:'Tajawal',sans-serif;font-size:.85rem;font-weight:800;color:var(--primary);min-width:24px;text-align:center}
+.gov-bar-track{flex:2;height:6px;background:var(--bg2);border-radius:3px;overflow:hidden}
+.gov-bar-fill{height:100%;border-radius:3px;background:var(--primary);transition:width .6s ease}
+
+/* ── EXPORT BUTTONS ── */
+.export-bar{display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+.export-btn{display:inline-flex;align-items:center;gap:5px;padding:6px 14px;border-radius:8px;border:1.5px solid;font-family:'Cairo',sans-serif;font-size:.78rem;font-weight:700;cursor:pointer;transition:all .18s;white-space:nowrap}
+.export-btn-pdf{background:#FEF2F2;border-color:#FECACA;color:#DC2626}
+.export-btn-pdf:hover{background:#DC2626;color:#fff;border-color:#DC2626}
+.export-btn-excel{background:#F0FDF4;border-color:#BBF7D0;color:#16A34A}
+.export-btn-excel:hover{background:#16A34A;color:#fff;border-color:#16A34A}
+.export-label{font-size:.67rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.05em;margin-right:4px}
+.detail-page{position:fixed;inset:0;background:var(--bg);z-index:8000;overflow-y:auto;transform:translateX(-100%);transition:transform .35s cubic-bezier(.4,0,.2,1)}
+.detail-page.open{transform:translateX(0)}
+.detail-page-header{background:linear-gradient(135deg,#006D77 0%,#004A50 60%,#003840 100%);padding:0;position:sticky;top:0;z-index:10}
+.detail-page-header-inner{display:flex;align-items:center;gap:14px;padding:18px 32px;flex-wrap:wrap}
+.back-btn{display:flex;align-items:center;gap:7px;background:rgba(255,255,255,.15);border:1px solid rgba(255,255,255,.25);border-radius:10px;padding:8px 16px;color:#fff;font-family:'Cairo',sans-serif;font-size:.85rem;font-weight:700;cursor:pointer;transition:all .2s;white-space:nowrap;flex-shrink:0}
+.back-btn:hover{background:rgba(255,255,255,.28)}
+.detail-page-title{font-family:'Tajawal',sans-serif;font-size:1.1rem;font-weight:800;color:#fff;flex:1;line-height:1.2}
+.detail-page-sub{font-size:.75rem;color:rgba(255,255,255,.65);margin-top:2px}
+.detail-page-body{max-width:900px;margin:0 auto;padding:32px}
+.detail-section{margin-bottom:24px}
+.detail-section-title{font-family:'Tajawal',sans-serif;font-size:.8rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:12px;display:flex;align-items:center;gap:8px}
+.detail-section-title::after{content:'';flex:1;height:1px;background:var(--border)}
+.detail-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:12px}
+.detail-field{background:var(--white);border:1px solid var(--border);border-radius:12px;padding:14px 16px;box-shadow:var(--shadow-sm)}
+.detail-field.full{grid-column:1/-1}
+.detail-field.accent{background:var(--primary-bg);border-color:var(--primary-bd)}
+.detail-field-label{font-size:.67rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px}
+.detail-field.accent .detail-field-label{color:var(--primary)}
+.detail-field-value{font-size:.88rem;color:var(--text);font-weight:500;line-height:1.7;word-break:break-word}
+.detail-field.accent .detail-field-value{color:var(--primary);font-weight:700}
+.detail-field-value a{color:var(--primary);text-decoration:none;font-weight:600}
+.detail-field-value a:hover{text-decoration:underline}
+.detail-hero{background:var(--white);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:24px;box-shadow:var(--shadow);display:flex;align-items:flex-start;gap:18px}
+.detail-hero-icon{width:56px;height:56px;background:var(--primary-bg);border:2px solid var(--primary-bd);border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:26px;flex-shrink:0}
+.detail-hero-name{font-family:'Tajawal',sans-serif;font-size:1.3rem;font-weight:800;color:var(--text);line-height:1.3;margin-bottom:6px}
+.detail-hero-loc{font-size:.82rem;color:var(--text3);display:flex;align-items:center;gap:5px}
+.detail-hero-badges{display:flex;gap:7px;flex-wrap:wrap;margin-top:10px}
+
+/* detail btn */
+.detail-btn{display:inline-flex;align-items:center;gap:4px;background:var(--primary-bg);border:1px solid var(--primary-bd);border-radius:6px;padding:4px 11px;font-size:.74rem;font-weight:700;color:var(--primary);cursor:pointer;font-family:'Cairo',sans-serif;transition:all .18s;white-space:nowrap}
+.detail-btn:hover{background:var(--primary);color:#fff}
+
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--text3)}
+
+/* ══════════════════════════════════════
+   RESPONSIVE — TABLET (≤900px)
+══════════════════════════════════════ */
+@media(max-width:900px){
+  .main{padding:20px 24px}
+  .header-inner{padding:18px 24px}
+  .tabs-bar{padding:0 24px}
+  .charts-row{grid-template-columns:1fr}
+  .kpi-grid{grid-template-columns:repeat(3,1fr)}
+  #mapWrapper{flex-direction:column!important}
+  #mapWrapper svg{width:100%!important;height:auto!important}
+}
+
+/* ══════════════════════════════════════
+   RESPONSIVE — MOBILE (≤640px)
+══════════════════════════════════════ */
+@media(max-width:640px){
+  /* Header */
+  .header-inner{padding:14px 16px;gap:8px}
+  .brand-title{font-size:1rem}
+  .brand-sub{display:none}
+  .logo-box{width:40px;height:40px;font-size:20px}
+  .header-actions{gap:6px}
+  .live-pill{display:none}
+  .date-pill{font-size:.68rem;padding:4px 10px}
+  .refresh-btn{padding:5px 10px;font-size:.72rem}
+
+  /* Tabs — scrollable row */
+  .tabs-bar{padding:0 8px;gap:0}
+  .tab-btn{padding:11px 10px;font-size:.72rem;gap:3px}
+  .tab-btn .tab-count{font-size:.62rem;padding:1px 5px}
+
+  /* Main */
+  .main{padding:12px 14px}
+
+  /* KPI — 2 columns */
+  .kpi-grid{grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+  .kpi-value{font-size:1.7rem}
+  .kpi-icon-box{width:34px;height:34px;font-size:1.1rem}
+  .kpi-card{padding:14px 12px}
+  .kpi-label{font-size:.72rem}
+
+  /* Charts */
+  .charts-row{grid-template-columns:1fr;gap:12px}
+  .card{padding:14px}
+
+  /* Map */
+  #mapWrapper{flex-direction:column!important;gap:12px}
+  #mapWrapper>div:last-child{order:-1} /* list above map on mobile */
+  #omanMap{width:100%!important;height:auto!important}
+  .gov-bar-track{display:none} /* hide bars on mobile, just show name+count */
+
+  /* Filter bar */
+  .filter-bar{padding:10px 12px;gap:10px}
+  .btn-group{gap:4px}
+  .filter-btn{padding:4px 9px;font-size:.72rem}
+
+  /* Search */
+  .search-input{font-size:.82rem;padding:8px 36px 8px 10px}
+
+  /* Table → Card view on mobile */
+  .table-wrap{border-radius:10px;overflow-x:auto}
+  table{min-width:500px}
+
+  /* Section title */
+  .section-title{font-size:.88rem}
+
+  /* Export bar */
+  .export-bar{gap:6px}
+  .export-btn{padding:5px 10px;font-size:.72rem}
+  .export-label{display:none}
+
+  /* Timeline */
+  .timeline{padding-right:18px}
+  .tl-item{padding:10px 12px}
+  .tl-name{font-size:.8rem}
+
+  /* Detail page */
+  .detail-page-body{padding:14px}
+  .detail-page-header-inner{padding:12px 14px;gap:10px}
+  .back-btn{padding:6px 12px;font-size:.78rem}
+  .detail-hero{flex-direction:column;gap:10px}
+  .detail-hero-name{font-size:1.1rem}
+  .detail-grid{grid-template-columns:1fr}
+
+  /* Donut */
+  .donut-wrap{flex-direction:column;align-items:center;gap:12px}
+
+  /* Card title */
+  .card-title{font-size:.82rem}
+}
+
+/* ══════════════════════════════════════
+   RESPONSIVE — SMALL MOBILE (≤380px)
+══════════════════════════════════════ */
+@media(max-width:380px){
+  .kpi-grid{grid-template-columns:1fr 1fr;gap:8px}
+  .kpi-value{font-size:1.5rem}
+  .tab-btn{padding:9px 8px;font-size:.68rem}
+  .main{padding:10px 10px}
+  .header-inner{padding:12px}
+  .brand-title{font-size:.9rem}
+}
+</style>
+
+<!-- Firebase SDK -->
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getFirestore, collection, getDocs, doc, getDoc, onSnapshot } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBcXa0lbp470RmkWv0EwHzKG4JXlNMf6zw",
+  authDomain: "dashboard-pharma-industry.firebaseapp.com",
+  projectId: "dashboard-pharma-industry",
+  storageBucket: "dashboard-pharma-industry.firebasestorage.app",
+  messagingSenderId: "601047413573",
+  appId: "1:601047413573:web:cf063c52087f97a941442c"
+};
+const _fbApp = initializeApp(firebaseConfig);
+const _db    = getFirestore(_fbApp);
+
+// Expose Firestore fetch to window
+window._fetchFromFirestore = async function(colName) {
+  // Get headers from meta
+  const metaDoc = await getDoc(doc(_db, '_meta', colName));
+  const headers = metaDoc.exists() ? metaDoc.data().headers : [];
+  // Get rows
+  const snap = await getDocs(collection(_db, colName));
+  const rows = [];
+  snap.forEach(d => rows.push(d.data()));
+  // Sort by doc id
+  rows.sort((a,b)=>0);
+  return { headers, rows };
+};
+
+// Write rows to Firestore (used by migrate)
+window._writeToFirestore = async function(colName, headers, rows) {
+  // Delete existing docs first
+  const existing = await getDocs(collection(_db, colName));
+  const delBatch = writeBatch(_db);
+  existing.forEach(d => delBatch.delete(d.ref));
+  await delBatch.commit();
+
+  // Write in batches of 400
+  const BATCH = 400;
+  let written = 0;
+  for(let i = 0; i < rows.length; i += BATCH){
+    const batch = writeBatch(_db);
+    rows.slice(i, i+BATCH).forEach((row, idx) => {
+      const id = String(i+idx+1).padStart(5,'0');
+      const clean = {};
+      Object.entries(row).forEach(([k,v])=>{ if(k&&k.trim()) clean[k.trim()]=String(v||'').trim(); });
+      batch.set(doc(_db, colName, id), clean);
+    });
+    await batch.commit();
+    written += Math.min(BATCH, rows.length - i);
+  }
+  // Save headers to meta
+  await setDoc(doc(_db, '_meta', colName), { headers, updatedAt: new Date().toISOString() });
+  return written;
+};
+
+// Real-time listener — calls callback when collection changes
+window._listenCollection = function(colName, callback) {
+  return onSnapshot(collection(_db, colName), snap => {
+    const rows = [];
+    snap.forEach(d => rows.push(d.data()));
+    callback(rows);
+  });
+};
+</script>
+</head>
+<body>
+
+<!-- LOADING -->
+<div class="loading-overlay" id="loadingOverlay">
+  <div class="loader-logo">⚕️</div>
+  <div class="loader-ring"></div>
+  <div class="loader-text">جاري الاتصال بـ Firestore...</div>
+  <div class="loader-status" id="loaderStatus">الاتصال بـ Firestore...</div>
+</div>
+
+<div class="error-banner" id="errorBanner"></div>
+
+<!-- HEADER -->
+<div class="header">
+  <div class="header-pattern"></div>
+  <div class="header-inner">
+    <div class="header-brand">
+      <div class="logo-box">⚕️</div>
+      <div class="brand-text">
+        <div class="brand-title">المصانع الطبية الوطنية</div>
+        <div class="brand-sub">Oman National Medical & Pharmaceutical Factories · Live Dashboard</div>
+      </div>
+    </div>
+    <div class="header-actions">
+      <div class="live-pill"><div class="live-dot"></div> 🔥 Firestore</div>
+      <div class="date-pill" id="lastUpdated">📅 جاري التحميل...</div>
+      <button class="refresh-btn" id="refreshBtn" onclick="loadAllSheets(true)">
+        <span class="ri">↻</span> تحديث
+      </button>
+      <button class="migrate-btn" id="migrateBtn" onclick="openMigratePanel()">
+        ⚡ Migrate
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs-bar">
+  <button class="tab-btn active" onclick="showTab('overview',this)">🏠 نظرة عامة</button>
+  <button class="tab-btn" onclick="showTab('active',this)">🏭 المصانع القائمة <span class="tab-count" id="tc-active">—</span></button>
+  <button class="tab-btn" onclick="showTab('licenses',this)">📜 صلاحيات الترخيص</button>
+  <button class="tab-btn" onclick="showTab('construction',this)">🔨 قيد الإنشاء <span class="tab-count" id="tc-const">—</span></button>
+  <button class="tab-btn" onclick="showTab('approvals',this)">✅ الموافقات المبدئية <span class="tab-count" id="tc-approval">—</span></button>
+  <button class="tab-btn" onclick="showTab('rejected',this)">❌ مرفوضة <span class="tab-count" id="tc-rejected">—</span></button>
+  <button class="tab-btn" onclick="showTab('expired',this)">⏰ منتهية <span class="tab-count" id="tc-expired">—</span></button>
+  <button class="tab-btn" onclick="showTab('contact',this)">📞 تواصل</button>
+  <button class="tab-btn" onclick="showTab('pathway',this)" style="color:#C8810A;border-bottom-color:transparent">🗺️ مسار الترخيص</button>
+</div>
+
+<!-- OVERVIEW -->
+<div class="tab-content active" id="tab-overview"><div class="main">
+
+  <!-- MAP FIRST — full width at top, smaller height -->
+  <div class="card" style="margin-bottom:20px">
+    <div class="card-title"><div class="card-title-line"></div> خريطة التوزيع الجغرافي — سلطنة عُمان</div>
+    <div style="display:flex;flex-direction:row-reverse;gap:16px;align-items:flex-start;width:100%" id="mapWrapper">
+
+      <!-- MAP — fixed width on right -->
+      <div style="flex:0 0 auto">
+        <svg id="omanMap" viewBox="0 0 560 680" xmlns="http://www.w3.org/2000/svg" style="width:420px;height:auto;display:block;border-radius:8px;box-shadow:0 2px 12px rgba(0,109,119,.1)">
+        <svg id="omanMap" viewBox="0 0 560 680" xmlns="http://www.w3.org/2000/svg" style="width:auto;height:550px;display:block;border-radius:8px;box-shadow:0 2px 12px rgba(0,109,119,.1)">
+          <defs><filter id="glow"><feDropShadow dx="0" dy="1" stdDeviation="2" flood-color="rgba(0,109,119,0.3)"/></filter></defs>
+          <rect width="560" height="680" fill="#EBF5F7" rx="8"/>
+          <g class="gov-region" data-gov="الداخلية" onclick="selectGov('الداخلية')">
+            <path class="gov-path" d="M425.6,349.7L432.7,369.0L307.2,310.3L319.9,295.1L369.7,273.7L403.6,278.0L425.6,349.7ZM376.9,239.5L330.0,266.8L342.3,216.3L360.8,215.4L379.7,233.2L376.9,239.5ZM369.7,273.7L319.9,295.1L330.0,266.8L376.9,239.5L375.0,263.0L369.7,273.7ZM448.8,246.1L439.1,248.3L421.8,218.1L435.6,216.4L451.7,231.6L448.8,246.1ZM424.6,255.1L409.9,265.8L393.7,251.8L389.5,235.1L405.9,232.6L424.6,255.1ZM409.9,265.8L403.6,278.0L369.7,273.7L375.0,263.0L393.7,251.8L409.9,265.8ZM393.7,251.8L375.0,263.0L376.9,239.5L379.7,233.2L389.5,235.1L393.7,251.8ZM428.5,254.7L424.6,255.1L405.9,232.6L407.8,228.7L421.8,218.1L439.1,248.3L428.5,254.7Z" stroke="#fff" stroke-width="0.8" stroke-linejoin="round"/>
+          </g>
+          <g class="gov-region" data-gov="جنوب الباطنة" onclick="selectGov('جنوب الباطنة')">
+            <path class="gov-path" d="M395.7,210.6L387.1,234.0L379.7,233.2L360.8,215.4L369.4,207.3L389.6,207.7L395.7,210.6ZM405.9,232.6L389.5,235.1L387.1,234.0L395.7,210.6L399.8,210.1L407.8,228.7L405.9,232.6ZM400.9,197.6L403.6,200.8L399.8,210.1L395.7,210.6L389.6,207.7L392.1,197.9L400.9,197.6ZM403.3,200.8L422.1,202.5L420.1,211.8L400.9,209.1L403.3,200.8ZM421.8,218.1L407.8,228.7L399.8,210.1L420.1,211.8L421.8,218.1Z" stroke="#fff" stroke-width="0.8" stroke-linejoin="round"/>
+          </g>
+          <g class="gov-region" data-gov="شمال الباطنة" onclick="selectGov('شمال الباطنة')">
+            <path class="gov-path" d="M349.3,178.9L360.7,187.4L375.0,192.5L369.4,207.3L360.8,215.4L342.3,216.3L341.2,214.9L335.3,194.2L349.3,178.9ZM374.8,192.3L392.1,197.9L389.6,207.7L369.4,207.3L374.8,192.3ZM318.4,140.5L325.8,152.0L306.0,169.3L299.7,149.8L318.4,140.5ZM335.0,161.5L349.3,178.8L335.3,194.2L316.3,178.9L335.0,161.5ZM289.2,126.8L289.8,128.6L286.8,126.9L285.5,128.5L289.9,135.8L294.0,137.0L299.2,130.8L307.8,126.9L308.0,122.3L310.3,121.4L318.4,140.5L299.7,149.8L277.6,123.8L286.1,121.4L288.1,122.3L289.2,126.8ZM325.8,152.0L335.0,161.5L316.3,178.9L306.4,174.8L306.0,169.3L325.8,152.0Z" stroke="#fff" stroke-width="0.8" stroke-linejoin="round"/>
+          </g>
+          <g class="gov-region" data-gov="البريمي" onclick="selectGov('البريمي')">
+            <path class="gov-path" d="M275.9,162.0L297.2,181.1L253.9,209.0L259.1,197.9L258.7,191.3L253.6,188.1L253.2,186.0L263.5,182.0L272.2,181.5L275.3,183.2L287.9,178.9L283.2,168.7L278.2,170.2L272.5,169.1L275.9,162.0ZM310.7,216.3L236.5,253.7L238.1,240.9L244.7,230.5L248.3,217.4L252.7,213.1L253.9,209.0L294.7,183.5L310.7,216.3ZM306.4,174.8L297.2,181.1L275.9,162.0L272.7,147.8L276.4,141.9L274.1,128.5L277.6,123.8L299.7,149.8L306.4,174.8Z" stroke="#fff" stroke-width="0.8" stroke-linejoin="round"/>
+          </g>
+          <g class="gov-region" data-gov="الظاهرة" onclick="selectGov('الظاهرة')">
+            <path class="gov-path" d="M307.2,310.3L262.4,319.6L265.1,311.5L236.0,266.8L236.5,253.7L310.7,216.3L341.2,214.9L342.3,216.3L330.0,266.8L319.9,295.1L307.2,310.3ZM341.2,214.9L310.7,216.3L294.7,183.5L306.4,174.8L316.3,178.9L335.3,194.2L341.2,214.9Z" stroke="#fff" stroke-width="0.8" stroke-linejoin="round"/>
+          </g>
+          <g class="gov-region" data-gov="الوسطى" onclick="selectGov('الوسطى')">
+            <path class="gov-path" d="M425.1,401.6L425.7,402.9L423.8,403.3L425.1,401.6ZM459.7,392.8L458.4,394.4L459.7,392.8ZM458.0,388.5L457.2,389.6L458.0,388.5ZM461.7,384.3L461.6,386.5L460.2,387.3L460.3,385.2L455.7,390.3L459.1,390.5L458.2,391.8L460.9,390.6L461.3,387.2L461.5,391.1L451.9,398.2L453.2,399.1L447.9,411.7L442.8,416.6L437.0,414.6L431.1,415.4L433.7,414.6L426.9,413.0L431.4,402.2L426.9,399.8L419.7,403.2L418.6,409.4L410.8,413.6L410.8,416.2L412.6,416.9L402.8,426.2L402.2,439.9L393.6,456.4L394.0,459.4L396.6,460.4L394.8,469.2L398.9,476.3L397.9,487.8L401.7,492.6L401.2,498.1L404.1,502.7L395.5,506.4L380.4,506.5L323.3,492.0L245.4,370.1L262.4,319.6L307.2,310.3L412.4,359.2L462.0,383.0L461.7,384.3Z" stroke="#fff" stroke-width="0.8" stroke-linejoin="round"/>
+          </g>
+          <g class="gov-region" data-gov="شمال الشرقية" onclick="selectGov('شمال الشرقية')">
+            <path class="gov-path" d="M435.7,346.3L432.7,369.0L403.6,278.0L409.9,265.8L424.6,255.1L428.5,254.7L442.8,298.3L435.7,346.3ZM484.0,312.7L490.0,268.8L518.1,287.2L484.0,312.7ZM523.6,289.6L484.0,312.7L518.1,287.2L523.6,289.6ZM474.8,344.9L490.7,351.5L472.5,366.7L462.1,383.0L432.7,369.0L442.8,298.3L467.9,258.1L488.9,260.7L490.0,268.8L483.4,313.1L474.8,344.9ZM467.9,258.1L442.8,298.3L428.5,254.7L439.1,248.3L448.8,246.1L467.9,258.1Z" stroke="#fff" stroke-width="0.8" stroke-linejoin="round"/>
+          </g>
+          <g class="gov-region" data-gov="جنوب الشرقية" onclick="selectGov('جنوب الشرقية')">
+            <path class="gov-path" d="M530.6,291.5L529.9,296.9L521.6,306.4L519.4,315.5L509.6,326.8L500.2,347.6L490.7,351.5L474.8,344.9L483.4,313.1L523.6,289.6L530.6,291.5ZM462.3,407.6L461.5,410.3L462.3,407.6ZM471.7,394.3L471.9,400.1L475.7,406.0L466.9,412.0L464.4,421.3L454.8,428.6L454.7,416.9L459.8,410.7L463.7,410.7L464.4,405.6L471.7,394.3ZM493.2,256.5L496.7,262.6L512.5,275.1L510.8,276.2L512.9,275.0L524.6,277.0L523.7,279.4L525.8,281.0L527.6,280.1L525.1,277.1L528.1,278.4L526.7,277.3L529.0,277.0L531.7,284.1L530.6,291.5L518.1,287.2L490.0,268.8L488.9,260.7L493.2,256.5Z" stroke="#fff" stroke-width="0.8" stroke-linejoin="round"/>
+          </g>
+          <g class="gov-region" data-gov="ظفار" onclick="selectGov('ظفار')">
+            <path class="gov-path" d="M261.2,599.2L260.4,600.6L261.2,599.2ZM307.7,597.7L308.9,598.5L307.7,597.7ZM276.8,597.6L278.5,599.7L275.4,599.2L276.8,597.6ZM289.6,594.8L292.1,598.4L284.0,598.6L289.6,594.8ZM201.8,584.9L223.7,629.0L216.1,632.5L205.1,633.2L202.2,631.6L201.6,629.0L193.7,628.1L201.8,584.9ZM245.4,370.1L323.3,492.0L380.4,506.5L354.1,511.2L336.4,519.4L327.0,529.8L326.9,538.0L321.2,554.8L321.7,558.3L314.1,563.3L308.5,571.7L297.9,569.8L293.4,571.4L285.0,570.8L280.9,573.0L263.9,573.4L252.8,576.6L239.7,537.5L218.3,540.5L99.5,479.2L222.5,438.8L245.4,370.1ZM164.7,630.3L159.5,631.4L159.1,634.6L155.2,636.6L143.0,638.3L137.6,644.2L132.1,646.2L123.4,645.8L99.9,652.9L101.5,652.2L97.1,642.7L91.4,642.8L76.3,625.0L77.8,614.5L167.5,605.2L171.4,629.2L164.7,630.3ZM250.8,577.6L246.7,586.7L239.6,591.4L237.0,596.0L237.6,600.8L242.1,604.8L238.0,612.3L239.4,614.9L235.0,621.1L231.9,621.8L223.8,630.2L201.5,583.4L218.3,540.5L239.7,537.5L252.8,576.6L250.8,577.6ZM201.8,584.9L193.7,628.1L171.4,629.2L167.5,605.2L201.5,583.4L201.8,584.9ZM126.1,493.0L218.3,540.5L201.5,583.4L167.5,605.2L83.7,614.0L82.7,611.9L78.4,611.3L80.8,607.8L30.8,502.4L99.5,479.2L126.1,493.0Z" stroke="#fff" stroke-width="0.8" stroke-linejoin="round"/>
+          </g>
+          <g class="gov-region" data-gov="مسندم" onclick="selectGov('مسندم')">
+            <path class="gov-path" d="M300.2,39.9L300.6,43.8L304.8,42.2L305.5,44.6L309.5,44.9L307.2,46.2L308.6,46.8L307.6,50.1L310.3,47.7L310.6,50.8L311.6,49.3L312.8,51.1L316.8,50.8L314.4,53.5L311.0,53.8L313.7,54.6L314.1,57.2L312.0,58.2L313.9,60.3L315.7,59.7L314.8,61.2L308.9,61.4L297.4,45.2L300.2,39.9ZM297.4,45.2L308.9,61.4L296.1,65.1L297.2,52.3L292.6,51.5L297.4,45.2ZM311.6,61.5L312.0,64.7L309.9,65.3L311.1,66.3L309.4,66.5L310.1,68.5L307.7,72.1L306.0,73.3L306.8,71.1L304.0,74.5L303.5,79.6L299.2,80.7L295.9,77.1L296.1,65.1L311.6,61.5ZM309.1,32.3L308.4,35.2L309.1,32.3ZM315.2,32.2L315.9,33.2L315.2,32.2ZM320.1,31.6L321.0,32.8L319.3,33.5L320.1,31.6ZM310.6,31.5L310.2,32.9L312.8,32.5L312.5,34.6L314.6,33.8L315.7,35.8L318.2,35.6L316.8,33.8L318.8,33.4L319.3,36.5L311.7,38.0L313.5,41.6L317.9,41.3L317.5,44.2L315.9,42.4L314.1,44.0L317.6,47.9L313.7,47.9L313.0,44.2L310.6,46.7L311.7,43.7L308.6,43.8L313.1,43.1L311.3,40.8L305.8,43.2L306.9,37.9L310.4,40.0L307.1,36.7L309.7,36.1L310.6,31.5Z" stroke="#fff" stroke-width="0.8" stroke-linejoin="round"/>
+          </g>
+          <g class="gov-region" data-gov="مسقط" onclick="selectGov('مسقط')">
+            <path class="gov-path" d="M422.1,202.5L433.0,208.3L439.2,209.1L435.6,216.4L421.8,218.1L420.1,211.8L422.1,202.5ZM440.8,208.9L447.6,213.7L454.6,227.0L451.7,231.6L435.6,216.4L438.7,209.1L440.8,208.9ZM450.3,206.9L452.5,207.6L453.4,211.2L460.4,213.6L460.5,215.1L462.4,214.2L464.0,217.2L454.6,227.0L447.6,213.7L450.3,206.9ZM446.3,206.4L449.2,207.0L447.6,213.7L441.0,209.0L446.3,206.4ZM463.9,218.0L465.6,222.5L472.9,227.3L473.5,231.2L477.6,234.6L477.9,238.1L482.7,244.8L491.3,251.0L493.2,256.5L488.9,260.7L467.9,258.1L448.8,246.1L451.7,231.6L463.9,218.0Z" stroke="#fff" stroke-width="0.8" stroke-linejoin="round"/>
+          </g>
+
+          <text x="408" y="255" text-anchor="middle" font-family="Cairo" font-size="11" font-weight="900" stroke="#003840" stroke-width="3" stroke-linejoin="round" paint-order="stroke" fill="#ffffff" pointer-events="none">الداخلية</text>
+          <text x="415" y="185" text-anchor="middle" font-family="Cairo" font-size="9" font-weight="900" stroke="#003840" stroke-width="3" stroke-linejoin="round" paint-order="stroke" fill="#ffffff" pointer-events="none">جنوب الباطنة</text>
+          <text x="360" y="130" text-anchor="middle" font-family="Cairo" font-size="9.5" font-weight="900" stroke="#003840" stroke-width="3" stroke-linejoin="round" paint-order="stroke" fill="#ffffff" pointer-events="none">شمال الباطنة</text>
+          <text x="255" y="175" text-anchor="middle" font-family="Cairo" font-size="9.5" font-weight="900" stroke="#003840" stroke-width="3" stroke-linejoin="round" paint-order="stroke" fill="#ffffff" pointer-events="none">البريمي</text>
+          <text x="290" y="235" text-anchor="middle" font-family="Cairo" font-size="10" font-weight="900" stroke="#003840" stroke-width="3" stroke-linejoin="round" paint-order="stroke" fill="#ffffff" pointer-events="none">الظاهرة</text>
+          <text x="410" y="430" text-anchor="middle" font-family="Cairo" font-size="12" font-weight="900" stroke="#003840" stroke-width="3" stroke-linejoin="round" paint-order="stroke" fill="#ffffff" pointer-events="none">الوسطى</text>
+          <text x="500" y="285" text-anchor="middle" font-family="Cairo" font-size="9" font-weight="900" stroke="#003840" stroke-width="3" stroke-linejoin="round" paint-order="stroke" fill="#ffffff" pointer-events="none">شمال الشرقية</text>
+          <text x="520" y="350" text-anchor="middle" font-family="Cairo" font-size="9" font-weight="900" stroke="#003840" stroke-width="3" stroke-linejoin="round" paint-order="stroke" fill="#ffffff" pointer-events="none">جنوب الشرقية</text>
+          <text x="185" y="590" text-anchor="middle" font-family="Cairo" font-size="14" font-weight="900" stroke="#003840" stroke-width="3" stroke-linejoin="round" paint-order="stroke" fill="#ffffff" pointer-events="none">ظفار</text>
+          <text x="310" y="32" text-anchor="middle" font-family="Cairo" font-size="9" font-weight="900" stroke="#003840" stroke-width="3" stroke-linejoin="round" paint-order="stroke" fill="#ffffff" pointer-events="none">مسندم</text>
+          <text x="485" y="185" text-anchor="middle" font-family="Cairo" font-size="10" font-weight="900" stroke="#003840" stroke-width="3" stroke-linejoin="round" paint-order="stroke" fill="#ffffff" pointer-events="none">مسقط</text>
+
+          <g id="mapBubbles"></g>
+        </svg>
+      </div>
+
+      <!-- LIST + DETAIL — takes remaining space on left -->
+      <div style="flex:1;min-width:0;overflow:hidden">
+        <div style="font-size:.67rem;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:8px">📍 إجمالي المصانع بالمحافظات</div>
+        <div id="govList" style="display:flex;flex-direction:column;gap:4px"></div>
+        <div id="govDetail" style="display:none;margin-top:12px;background:var(--white);border:1.5px solid var(--border);border-radius:12px;padding:12px;box-shadow:var(--shadow);overflow:hidden"></div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- KPI CARDS -->
+  <div class="kpi-grid">
+    <div class="kpi-card c-teal">
+      <div class="kpi-stripe"></div>
+      <div class="kpi-top"><div class="kpi-icon-box">🏭</div></div>
+      <div class="kpi-value" id="kpi-active">—</div>
+      <div class="kpi-label">المصانع القائمة والمنتجة</div>
+    </div>
+    <div class="kpi-card c-gold">
+      <div class="kpi-stripe"></div>
+      <div class="kpi-top"><div class="kpi-icon-box">🔨</div></div>
+      <div class="kpi-value" id="kpi-construction">—</div>
+      <div class="kpi-label">مصانع قيد الإنشاء</div>
+    </div>
+    <div class="kpi-card c-blue">
+      <div class="kpi-stripe"></div>
+      <div class="kpi-top"><div class="kpi-icon-box">✅</div></div>
+      <div class="kpi-value" id="kpi-approvals">—</div>
+      <div class="kpi-label">موافقات مبدئية ممنوحة</div>
+    </div>
+    <div class="kpi-card c-red">
+      <div class="kpi-stripe"></div>
+      <div class="kpi-top"><div class="kpi-icon-box">❌</div></div>
+      <div class="kpi-value" id="kpi-rejected">—</div>
+      <div class="kpi-label">طلبات مرفوضة</div>
+    </div>
+    <div class="kpi-card c-purple">
+      <div class="kpi-stripe"></div>
+      <div class="kpi-top"><div class="kpi-icon-box">⏰</div></div>
+      <div class="kpi-value" id="kpi-expired">—</div>
+      <div class="kpi-label">منتهية الصلاحية</div>
+    </div>
+    <div class="kpi-card c-green">
+      <div class="kpi-stripe"></div>
+      <div class="kpi-top"><div class="kpi-icon-box">📊</div></div>
+      <div class="kpi-value" id="kpi-total">—</div>
+      <div class="kpi-label">إجمالي جميع المشاريع</div>
+    </div>
+  </div>
+
+  <!-- CHARTS -->
+  <div class="charts-row">
+    <div class="card">
+      <div class="card-title"><div class="card-title-line"></div> توزيع المشاريع حسب الحالة</div>
+      <div class="donut-wrap">
+        <svg width="140" height="140" viewBox="0 0 150 150" id="donutSvg" style="flex-shrink:0">
+          <circle cx="75" cy="75" r="58" fill="none" stroke="#E8EEF5" stroke-width="22"/>
+          <text x="75" y="70" text-anchor="middle" fill="#1A2535" font-size="24" font-weight="800" font-family="Tajawal" id="donutNum">—</text>
+          <text x="75" y="88" text-anchor="middle" fill="#6B829A" font-size="11" font-family="Cairo">مشروع</text>
+        </svg>
+        <div class="donut-legend" id="donutLegend"></div>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title"><div class="card-title-line"></div> أنواع المصانع القائمة</div>
+      <div class="bar-list" id="typeBarChart"><div style="color:var(--text3);font-size:.82rem;text-align:center;padding:20px">جاري التحميل...</div></div>
+    </div>
+  </div>
+
+</div></div>
+
+<!-- ACTIVE -->
+<div class="tab-content" id="tab-active"><div class="main">
+  <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:14px">
+    <div class="section-title" style="margin-bottom:0">🏭 المصانع القائمة والمنتجة <span class="s-badge" id="activeBadge">—</span></div>
+    <div class="export-bar">
+      <span class="export-label">تصدير:</span>
+      <button class="export-btn export-btn-pdf" onclick="exportPDF('activeTable','المصانع القائمة')">📄 PDF</button>
+      <button class="export-btn export-btn-excel" onclick="exportExcel('active','المصانع القائمة')">📊 Excel</button>
+    </div>
+  </div>
+  <div class="filter-bar">
+    <div class="filter-group">
+      <div class="filter-group-label">نوع المصنع</div>
+      <div class="btn-group" id="activeTypeBtns"></div>
+    </div>
+    <div class="results-count">عرض <span id="activeCount">—</span></div>
+  </div>
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input class="search-input" id="searchActive" oninput="applySearch('active')" placeholder="ابحث بالاسم أو الموقع أو خطوط الإنتاج...">
+  </div>
+  <div class="table-wrap"><table id="activeTable"><thead id="activeHead"></thead><tbody id="activeBody"></tbody></table></div>
+</div></div>
+
+<!-- LICENSES -->
+<div class="tab-content" id="tab-licenses"><div class="main">
+  <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:14px">
+    <div class="section-title" style="margin-bottom:0">📜 صلاحيات الترخيص — مصانع قائمة <span class="s-badge" id="licensesBadge">—</span></div>
+    <div class="export-bar">
+      <span class="export-label">تصدير:</span>
+      <button class="export-btn export-btn-pdf" onclick="exportPDF('licensesTable','صلاحيات الترخيص')">📄 PDF</button>
+      <button class="export-btn export-btn-excel" onclick="exportExcel('licenses','صلاحيات الترخيص')">📊 Excel</button>
+    </div>
+  </div>
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input class="search-input" id="searchLicenses" oninput="applySearch('licenses')" placeholder="ابحث...">
+  </div>
+  <div class="table-wrap"><table id="licensesTable"><thead id="licensesHead"></thead><tbody id="licensesBody"></tbody></table></div>
+</div></div>
+
+<!-- CONSTRUCTION -->
+<div class="tab-content" id="tab-construction"><div class="main">
+  <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:14px">
+    <div class="section-title" style="margin-bottom:0">🔨 مصانع قيد الإنشاء <span class="s-badge" id="constBadge">—</span></div>
+    <div class="export-bar">
+      <span class="export-label">تصدير:</span>
+      <button class="export-btn export-btn-pdf" onclick="exportPDF('constTable','مصانع قيد الإنشاء')">📄 PDF</button>
+      <button class="export-btn export-btn-excel" onclick="exportExcel('construction','مصانع قيد الإنشاء')">📊 Excel</button>
+    </div>
+  </div>
+  <div class="filter-bar">
+    <div class="filter-group">
+      <div class="filter-group-label">نوع المصنع</div>
+      <div class="btn-group" id="constTypeBtns"></div>
+    </div>
+    <div class="results-count">عرض <span id="constCount">—</span></div>
+  </div>
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input class="search-input" id="searchConst" oninput="applySearch('const')" placeholder="ابحث...">
+  </div>
+  <div class="table-wrap"><table id="constTable"><thead id="constHead"></thead><tbody id="constBody"></tbody></table></div>
+</div></div>
+
+<!-- APPROVALS -->
+<div class="tab-content" id="tab-approvals"><div class="main">
+  <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:14px">
+    <div class="section-title" style="margin-bottom:0">✅ الموافقات المبدئية <span class="s-badge" id="approvalBadge">—</span></div>
+    <div class="export-bar">
+      <span class="export-label">تصدير:</span>
+      <button class="export-btn export-btn-pdf" onclick="exportPDF('approvalTable','الموافقات المبدئية')">📄 PDF</button>
+      <button class="export-btn export-btn-excel" onclick="exportExcel('approvals','الموافقات المبدئية')">📊 Excel</button>
+    </div>
+  </div>
+  <div class="filter-bar">
+    <div class="filter-group">
+      <div class="filter-group-label">📅 السنة</div>
+      <div class="btn-group" id="approvalYearBtns"></div>
+    </div>
+    <div class="filter-group">
+      <div class="filter-group-label">نوع المصنع</div>
+      <div class="btn-group" id="approvalTypeBtns"></div>
+    </div>
+    <div class="results-count">عرض <span id="approvalCount">—</span></div>
+  </div>
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input class="search-input" id="searchApproval" oninput="applySearch('approval')" placeholder="ابحث عن شركة أو موقع...">
+  </div>
+  <div class="charts-row" style="margin-bottom:18px">
+    <div class="card"><div class="card-title"><div class="card-title-line"></div> حسب السنة</div><div class="bar-list" id="approvalYearChart"></div></div>
+    <div class="card"><div class="card-title"><div class="card-title-line"></div> حسب نوع المشروع</div><div class="bar-list" id="approvalTypeChart"></div></div>
+  </div>
+  <div class="section-title" style="margin-top:4px">📅 الجدول الزمني للموافقات</div>
+  <div class="timeline" id="approvalTimeline"></div>
+</div></div>
+
+<!-- REJECTED -->
+<div class="tab-content" id="tab-rejected"><div class="main">
+  <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:14px">
+    <div class="section-title" style="margin-bottom:0">❌ طلبات لم تُمنح موافقة مبدئية <span class="s-badge" id="rejectedBadge">—</span></div>
+    <div class="export-bar">
+      <span class="export-label">تصدير:</span>
+      <button class="export-btn export-btn-pdf" onclick="exportPDF('rejectedTable','طلبات مرفوضة')">📄 PDF</button>
+      <button class="export-btn export-btn-excel" onclick="exportExcel('rejected','طلبات مرفوضة')">📊 Excel</button>
+    </div>
+  </div>
+  <div class="search-wrap"><span class="search-icon">🔍</span>
+    <input class="search-input" id="searchRejected" oninput="applySearch('rejected')" placeholder="ابحث..."></div>
+  <div class="table-wrap"><table id="rejectedTable"><thead id="rejectedHead"></thead><tbody id="rejectedBody"></tbody></table></div>
+</div></div>
+
+<!-- EXPIRED -->
+<div class="tab-content" id="tab-expired"><div class="main">
+  <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:14px">
+    <div class="section-title" style="margin-bottom:0">⏰ منتهية الصلاحية <span class="s-badge" id="expiredBadge">—</span></div>
+    <div class="export-bar">
+      <span class="export-label">تصدير:</span>
+      <button class="export-btn export-btn-pdf" onclick="exportPDF('expiredTable','منتهية الصلاحية')">📄 PDF</button>
+      <button class="export-btn export-btn-excel" onclick="exportExcel('expired','منتهية الصلاحية')">📊 Excel</button>
+    </div>
+  </div>
+  <div class="search-wrap"><span class="search-icon">🔍</span>
+    <input class="search-input" id="searchExpired" oninput="applySearch('expired')" placeholder="ابحث..."></div>
+  <div class="table-wrap"><table id="expiredTable"><thead id="expiredHead"></thead><tbody id="expiredBody"></tbody></table></div>
+</div></div>
+
+<!-- CONTACT -->
+<div class="tab-content" id="tab-contact"><div class="main">
+  <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:14px">
+    <div class="section-title" style="margin-bottom:0">📞 تواصل <span class="s-badge" id="contactBadge">—</span></div>
+    <div class="export-bar">
+      <span class="export-label">تصدير:</span>
+      <button class="export-btn export-btn-pdf" onclick="exportPDF('contactTable','تواصل')">📄 PDF</button>
+      <button class="export-btn export-btn-excel" onclick="exportExcel('contact','تواصل')">📊 Excel</button>
+    </div>
+  </div>
+  <div class="search-wrap"><span class="search-icon">🔍</span>
+    <input class="search-input" id="searchContact" oninput="applySearch('contact')" placeholder="ابحث..."></div>
+  <div class="table-wrap"><table id="contactTable"><thead id="contactHead"></thead><tbody id="contactBody"></tbody></table></div>
+</div></div>
+
+<!-- DETAIL PAGE -->
+<div class="detail-page" id="detailPage">
+  <div class="detail-page-header">
+    <div class="detail-page-header-inner">
+      <button class="back-btn" onclick="goBack()">← رجوع</button>
+      <div>
+        <div class="detail-page-title" id="dpTitle">—</div>
+        <div class="detail-page-sub" id="dpSub">—</div>
+      </div>
+    </div>
+  </div>
+  <div class="detail-page-body" id="dpBody"></div>
+</div>
+
+<!-- PATHWAY TAB -->
+<div class="tab-content" id="tab-pathway">
+<style>
+#tab-pathway{background:#F4F7FC;direction:rtl}
+.pw-wrap{max-width:860px;margin:0 auto;padding:28px 32px 48px;position:relative;direction:rtl}
+.pw-inner{position:relative;z-index:1}
+.pw-header{text-align:center;padding:8px 0 28px}
+.pw-badge{display:inline-flex;align-items:center;gap:8px;background:linear-gradient(135deg,rgba(21,101,192,.09),rgba(200,129,10,.06));border:1.5px solid rgba(21,101,192,.22);border-radius:40px;padding:5px 18px;font-size:12px;font-weight:700;color:#1565C0;margin-bottom:14px}
+.pw-badge::before{content:'';width:6px;height:6px;background:#E09C1A;border-radius:50%;animation:pw-blink 2s ease-in-out infinite}
+@keyframes pw-blink{0%,100%{opacity:1}50%{opacity:.2}}
+.pw-title{font-size:clamp(18px,3.5vw,32px);font-weight:900;color:#0B1F3A;line-height:1.25}
+.pw-title span{background:linear-gradient(135deg,#1565C0,#C8810A);-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.pw-sub{margin-top:6px;font-size:12px;color:#6A7D96;font-style:italic}
+.pw-rule{width:56px;height:3px;background:linear-gradient(90deg,#1565C0,#C8810A);border-radius:2px;margin:14px auto 0}
+.pw-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:0 0 28px}
+.pw-stat{background:#fff;border-radius:14px;padding:14px 10px;text-align:center;box-shadow:0 4px 16px rgba(11,31,58,.07)}
+.pw-stat:nth-child(1){border-top:3px solid #C8810A}
+.pw-stat:nth-child(2){border-top:3px solid #1565C0}
+.pw-stat:nth-child(3){border-top:3px solid #6A2FA0}
+.pw-stat-num{font-size:28px;font-weight:900;line-height:1}
+.pw-stat:nth-child(1) .pw-stat-num{color:#C8810A}
+.pw-stat:nth-child(2) .pw-stat-num{color:#1565C0}
+.pw-stat:nth-child(3) .pw-stat-num{color:#6A2FA0}
+.pw-stat-lbl{font-size:11px;color:#6A7D96;margin-top:4px;font-weight:600}
+.pw-mini{background:#fff;border:1px solid rgba(21,101,192,.13);border-radius:16px;padding:18px 20px;margin-bottom:24px;box-shadow:0 4px 16px rgba(11,31,58,.07)}
+.pw-mini-title{text-align:center;font-size:11px;font-weight:800;color:#7A8FA8;letter-spacing:.6px;text-transform:uppercase;margin-bottom:16px}
+.pw-mini-flow{display:flex;align-items:center;justify-content:center;gap:0;direction:rtl;flex-wrap:wrap}
+.pw-node{display:flex;flex-direction:column;align-items:center;text-align:center;border-radius:14px;padding:12px 14px;min-width:110px;flex-shrink:0;transition:transform .2s}
+.pw-node:hover{transform:translateY(-3px)}
+.pw-n-gold{background:linear-gradient(135deg,#FFF3DC,#FFE8B0);border:2px solid rgba(200,129,10,.3)}
+.pw-n-blue{background:linear-gradient(135deg,#E3F0FF,#C4DCFF);border:2px solid rgba(21,101,192,.3)}
+.pw-n-violet{background:linear-gradient(135deg,#F3E8FF,#E2CFFF);border:2px solid rgba(106,47,160,.3)}
+.pw-n-cert{background:linear-gradient(135deg,#FFFBEC,#FFF0C0);border:2px solid rgba(200,129,10,.4)}
+.pw-n-num{width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900;color:#fff;margin-bottom:5px}
+.pw-n-gold .pw-n-num{background:linear-gradient(135deg,#C8810A,#E09C1A)}
+.pw-n-blue .pw-n-num{background:linear-gradient(135deg,#1565C0,#1976D2)}
+.pw-n-violet .pw-n-num{background:linear-gradient(135deg,#6A2FA0,#9050C8)}
+.pw-n-ico{font-size:24px;margin-bottom:5px}
+.pw-n-text{font-size:11px;font-weight:800;line-height:1.3}
+.pw-n-gold .pw-n-text{color:#7A4A00}
+.pw-n-blue .pw-n-text{color:#0D3C82}
+.pw-n-violet .pw-n-text{color:#4A1A82}
+.pw-n-cert .pw-n-text{color:#7A4A00}
+.pw-n-days{margin-top:5px;font-size:10px;font-weight:700;padding:2px 8px;border-radius:10px}
+.pw-n-gold .pw-n-days{background:rgba(200,129,10,.12);color:#7A4A00}
+.pw-n-blue .pw-n-days{background:rgba(21,101,192,.12);color:#0D3C82}
+.pw-n-violet .pw-n-days{background:rgba(106,47,160,.12);color:#4A1A82}
+.pw-arr{display:flex;align-items:center;padding:0 4px;flex-shrink:0}
+.pw-arr-line{height:2px;width:24px;background:linear-gradient(to left,rgba(21,101,192,.7),rgba(21,101,192,.25))}
+.pw-arr-head{width:0;height:0;border-top:6px solid transparent;border-bottom:6px solid transparent;border-right:8px solid rgba(21,101,192,.7)}
+.pw-flow{display:flex;flex-direction:column;align-items:center;gap:0}
+.pw-start{background:linear-gradient(135deg,#1565C0,#1A8FD1);color:#fff;border-radius:50px;padding:14px 32px;display:flex;align-items:center;gap:12px;box-shadow:0 6px 24px rgba(21,101,192,.3)}
+.pw-start-ico{font-size:22px}
+.pw-start-label{font-size:14px;font-weight:900}
+.pw-start-en{font-size:11px;opacity:.8;margin-top:1px;font-style:italic}
+.pw-arrow{display:flex;flex-direction:column;align-items:center;padding:4px 0}
+.pw-arrow-line{width:2px;height:26px;background:linear-gradient(to bottom,rgba(21,101,192,.3),rgba(21,101,192,.8))}
+.pw-arrow-head{width:0;height:0;border-left:7px solid transparent;border-right:7px solid transparent;border-top:9px solid rgba(21,101,192,.8)}
+.pw-phase{width:100%;background:#fff;border-radius:16px;overflow:hidden;box-shadow:0 4px 20px rgba(11,31,58,.08);border:1px solid rgba(21,101,192,.1)}
+.pw-ph-hdr{display:flex;align-items:center;gap:12px;padding:14px 20px}
+.pw-ph-gold{background:linear-gradient(135deg,#FFF3DC,#FFE8B0);border-bottom:3px solid #C8810A}
+.pw-ph-blue{background:linear-gradient(135deg,#E3F0FF,#C4DCFF);border-bottom:3px solid #1565C0}
+.pw-ph-violet{background:linear-gradient(135deg,#F3E8FF,#E2CFFF);border-bottom:3px solid #6A2FA0}
+.pw-ph-num{width:46px;height:46px;border-radius:11px;display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:900;color:#fff;flex-shrink:0}
+.pw-pn-gold{background:linear-gradient(135deg,#C8810A,#E09C1A)}
+.pw-pn-blue{background:linear-gradient(135deg,#1565C0,#1976D2)}
+.pw-pn-violet{background:linear-gradient(135deg,#6A2FA0,#9050C8)}
+.pw-ph-info{flex:1}
+.pw-ph-lbl{font-size:10px;font-weight:700;color:#8A9BB0;letter-spacing:.7px;text-transform:uppercase}
+.pw-ph-name{font-size:15px;font-weight:900;color:#0B1F3A;margin-top:1px}
+.pw-ph-en{font-size:11px;color:#6A7D96;font-style:italic;margin-top:1px}
+.pw-ph-badge{font-size:11px;font-weight:800;padding:4px 12px;border-radius:20px;white-space:nowrap}
+.pw-pb-gold{background:rgba(200,129,10,.12);color:#7A4A00;border:1px solid rgba(200,129,10,.28)}
+.pw-pb-blue{background:rgba(21,101,192,.11);color:#0D3C82;border:1px solid rgba(21,101,192,.28)}
+.pw-pb-violet{background:rgba(106,47,160,.11);color:#4A1A82;border:1px solid rgba(106,47,160,.28)}
+.pw-step{display:flex;align-items:flex-start;gap:10px;padding:10px 20px;border-bottom:1px solid rgba(0,0,0,.04);direction:rtl}
+.pw-step:last-of-type{border-bottom:none}
+.pw-step-ico{width:26px;height:26px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:13px;flex-shrink:0;margin-top:2px}
+.pw-si-gold{background:rgba(200,129,10,.12)}
+.pw-si-blue{background:rgba(21,101,192,.12)}
+.pw-si-violet{background:rgba(106,47,160,.12)}
+.pw-step-txt{font-size:13px;color:#3A4F6A;line-height:1.65;padding-top:3px}
+.pw-sub-sect{border-top:2px dashed rgba(200,129,10,.28);background:linear-gradient(135deg,#FFFBF4,#FFF6E6)}
+.pw-sub-hdr{display:flex;align-items:center;gap:7px;padding:9px 20px 7px;font-size:11px;font-weight:900;color:#7A4A00;letter-spacing:.4px}
+.pw-sub-row{display:flex;align-items:flex-start;gap:10px;padding:8px 20px;border-bottom:1px solid rgba(200,129,10,.1);direction:rtl}
+.pw-sub-row:last-child{border-bottom:none}
+.pw-sub-ico{width:24px;height:24px;border-radius:7px;display:flex;align-items:center;justify-content:center;font-size:12px;flex-shrink:0;margin-top:2px;background:rgba(200,129,10,.15)}
+.pw-sub-txt{font-size:13px;color:#5A3800;line-height:1.65;padding-top:2px;font-weight:600}
+.pw-req{border-top:1px solid rgba(0,0,0,.06);background:#F8FBFF;padding:11px 20px 13px;direction:rtl}
+.pw-req-lbl{font-size:11px;font-weight:900;color:#3A5070;letter-spacing:.5px;margin-bottom:8px;display:flex;align-items:center;gap:5px}
+.pw-req-lbl::before{content:'📌';font-size:12px}
+.pw-req-tags{display:flex;flex-wrap:wrap;gap:6px}
+.pw-req-tag{font-size:11px;font-weight:600;padding:3px 11px;border-radius:20px;background:#fff;border:1px solid rgba(21,101,192,.18);color:#2A4060}
+.pw-decision{width:100%;max-width:460px;background:linear-gradient(135deg,#FFFBF0,#FFF3D4);border:2px solid rgba(200,129,10,.32);border-radius:14px;padding:16px 20px;text-align:center}
+.pw-dec-title{font-size:13px;font-weight:800;color:#7A4000}
+.pw-dec-opts{display:flex;justify-content:center;gap:10px;margin-top:9px;flex-wrap:wrap}
+.pw-dec-yes{background:rgba(10,122,90,.14);border:1px solid rgba(10,122,90,.3);color:#065C3C;padding:4px 14px;border-radius:20px;font-size:12px;font-weight:700}
+.pw-dec-no{background:rgba(192,57,43,.1);border:1px solid rgba(192,57,43,.28);color:#B02020;padding:4px 14px;border-radius:20px;font-size:12px;font-weight:700}
+.pw-build{width:100%;background:linear-gradient(135deg,#E8F7F1,#D2EDE5);border:2px dashed rgba(10,122,90,.35);border-radius:14px;padding:14px 20px;display:flex;align-items:center;gap:14px;direction:rtl}
+.pw-build-ico{font-size:28px;flex-shrink:0}
+.pw-build-title{font-size:13px;font-weight:900;color:#054A30}
+.pw-build-sub{font-size:11px;color:#2E7D60;margin-top:3px;line-height:1.7}
+.pw-cert{width:100%;background:linear-gradient(135deg,#FFFBEC,#FFF0C0);border:2px solid rgba(200,129,10,.38);border-radius:20px;padding:22px 26px;display:flex;align-items:center;gap:18px;box-shadow:0 6px 28px rgba(200,129,10,.15);direction:rtl}
+.pw-cert-seal{width:64px;height:64px;border-radius:50%;background:linear-gradient(135deg,#C8810A,#E09C1A);display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 4px 16px rgba(200,129,10,.35);position:relative}
+.pw-cert-seal::after{content:'';position:absolute;inset:-5px;border-radius:50%;border:2px dashed rgba(200,129,10,.45)}
+.pw-cert-seal-ico{font-size:30px}
+.pw-cert-lbl{font-size:10px;font-weight:700;color:#C8810A;letter-spacing:.8px;text-transform:uppercase}
+.pw-cert-title{font-size:16px;font-weight:900;color:#0B1F3A;margin-top:3px}
+.pw-cert-en{font-size:11px;color:#6A7D96;font-style:italic;margin-top:2px}
+.pw-cert-badge{margin-top:8px;display:inline-block;background:linear-gradient(135deg,#C8810A,#A06000);color:#fff;font-size:11px;font-weight:900;padding:4px 14px;border-radius:20px}
+.pw-total{width:100%;background:linear-gradient(135deg,#0B1F3A,#112B52);border-radius:14px;padding:18px 24px;display:flex;align-items:center;gap:14px;color:#fff;direction:rtl}
+.pw-total-ico{font-size:26px}
+.pw-total-lbl{font-size:12px;opacity:.7;margin-bottom:3px}
+.pw-total-num{font-size:20px;font-weight:900}
+.pw-total-num span{font-size:11px;opacity:.7;font-weight:400;margin-right:4px}
+</style>
+<div class="pw-wrap">
+  <div class="pw-inner">
+    <div class="pw-header">
+      <div class="pw-badge">مركز سلامة الدواء · وزارة الصحة · سلطنة عُمان</div>
+      <h1 class="pw-title">مسار ترخيص<br><span>مصانع الأدوية والمستلزمات والأجهزة الطبية</span></h1>
+      <p class="pw-sub">Pharmaceutical, Medical Devices & Supplies Plant Licensing Pathway</p>
+      <div class="pw-rule"></div>
+    </div>
+
+    <div class="pw-stats">
+      <div class="pw-stat"><div class="pw-stat-num">3</div><div class="pw-stat-lbl">مراحل رئيسية</div></div>
+      <div class="pw-stat"><div class="pw-stat-num">40</div><div class="pw-stat-lbl">يوم عمل إداري</div></div>
+      <div class="pw-stat"><div class="pw-stat-num">📜</div><div class="pw-stat-lbl">الترخيص النهائي</div></div>
+    </div>
+
+    <div class="pw-mini">
+      <div class="pw-mini-title">نظرة عامة على المسار · Pathway Overview</div>
+      <div class="pw-mini-flow">
+        <div class="pw-node pw-n-gold"><div class="pw-n-num">1</div><div class="pw-n-text">الموافقة المبدئية</div><div class="pw-n-days">10 أيام</div></div>
+        <div class="pw-arr"><div class="pw-arr-line"></div><div class="pw-arr-head"></div></div>
+        <div class="pw-node pw-n-blue"><div class="pw-n-num">2</div><div class="pw-n-text">الموافقة على الخرائط</div><div class="pw-n-days">30 يوم</div></div>
+        <div class="pw-arr"><div class="pw-arr-line"></div><div class="pw-arr-head"></div></div>
+        <div class="pw-node pw-n-violet"><div class="pw-n-num">3</div><div class="pw-n-text">الموافقة النهائية</div><div class="pw-n-days">حسب الجاهزية</div></div>
+        <div class="pw-arr"><div class="pw-arr-line"></div><div class="pw-arr-head"></div></div>
+        <div class="pw-node pw-n-cert"><div class="pw-n-ico">📜</div><div class="pw-n-text">الترخيص النهائي</div></div>
+      </div>
+    </div>
+
+    <div class="pw-flow">
+      <div class="pw-start">
+        <div class="pw-start-ico">💡</div>
+        <div><div class="pw-start-label">بداية المشروع — الفكرة الاستثمارية</div><div class="pw-start-en">Project Initiation — Investment Idea</div></div>
+      </div>
+      <div class="pw-arrow"><div class="pw-arrow-line"></div><div class="pw-arrow-head"></div></div>
+
+      <div class="pw-phase">
+        <div class="pw-ph-hdr pw-ph-gold">
+          <div class="pw-ph-num pw-pn-gold">1</div>
+          <div class="pw-ph-info">
+            <div class="pw-ph-lbl">المرحلة الأولى · Phase One</div>
+            <div class="pw-ph-name">الموافقة المبدئية</div>
+            <div class="pw-ph-en">Initial Approval</div>
+          </div>
+          <div class="pw-ph-badge pw-pb-gold">⏱ 10 أيام عمل</div>
+        </div>
+        <div class="pw-step"><div class="pw-step-ico pw-si-gold">📝</div><div class="pw-step-txt">تقديم طلب رسمي للمدير العام مع كامل المستندات المطلوبة</div></div>
+        <div class="pw-step"><div class="pw-step-ico pw-si-gold">🔍</div><div class="pw-step-txt">دراسة الطلب من قِبَل اللجنة المختصة خلال 10 أيام عمل من تاريخ الاستلام</div></div>
+        <div class="pw-step"><div class="pw-step-ico pw-si-gold">✅</div><div class="pw-step-txt">إصدار الموافقة المبدئية — صالحة سنة كاملة قابلة للتمديد</div></div>
+        <div class="pw-sub-sect">
+          <div class="pw-sub-hdr">🔽 إجراءات ما بعد الحصول على الموافقة المبدئية</div>
+          <div class="pw-sub-row"><div class="pw-sub-ico">🏭</div><div class="pw-sub-txt">تفعيل نشاط التصنيع لدى الجهات المختصة (السجل التجاري)</div></div>
+          <div class="pw-sub-row"><div class="pw-sub-ico">🗺️</div><div class="pw-sub-txt">تقديم خرائط المصنع المتناسبة مع موقع المصنع المعتمد</div></div>
+        </div>
+        <div class="pw-req">
+          <div class="pw-req-lbl">متطلبات المرحلة الأولى</div>
+          <div class="pw-req-tags">
+            <span class="pw-req-tag">📄 السجل التجاري</span>
+            <span class="pw-req-tag">📄 دراسة الجدوى</span>
+            <span class="pw-req-tag">📄 السيرة الذاتية للمستشار</span>
+            <span class="pw-req-tag">📄 استمارة طلب الموافقة المبدئية</span>
+            <span class="pw-req-tag">📄 شهادات التصنيع الجيد للمصنع الأم</span>
+          </div>
+        </div>
+      </div>
+      <div class="pw-arrow"><div class="pw-arrow-line"></div><div class="pw-arrow-head"></div></div>
+
+      <div class="pw-decision">
+        <div class="pw-dec-title">🔶 هل استُوفيت جميع الشروط والمستندات؟</div>
+        <div class="pw-dec-opts">
+          <span class="pw-dec-yes">✓ نعم — الانتقال للمرحلة الثانية</span>
+          <span class="pw-dec-no">✗ لا — مراجعة وإعادة تقديم</span>
+        </div>
+      </div>
+      <div class="pw-arrow"><div class="pw-arrow-line"></div><div class="pw-arrow-head"></div></div>
+
+      <div class="pw-phase">
+        <div class="pw-ph-hdr pw-ph-blue">
+          <div class="pw-ph-num pw-pn-blue">2</div>
+          <div class="pw-ph-info">
+            <div class="pw-ph-lbl">المرحلة الثانية · Phase Two</div>
+            <div class="pw-ph-name">الموافقة على الخرائط — مرحلة الإنشاء</div>
+            <div class="pw-ph-en">Layout Approval — Construction Phase</div>
+          </div>
+          <div class="pw-ph-badge pw-pb-blue">⏱ 30 يوم عمل</div>
+        </div>
+        <div class="pw-step"><div class="pw-step-ico pw-si-blue">📐</div><div class="pw-step-txt">تقديم المخططات المعمارية والهندسية المعتمدة وفق متطلبات الممارسة الجيدة للتصنيع</div></div>
+        <div class="pw-step"><div class="pw-step-ico pw-si-blue">👥</div><div class="pw-step-txt">مراجعة اللجنة المختصة وإبداء الملاحظات خلال 30 يوم عمل</div></div>
+        <div class="pw-step"><div class="pw-step-ico pw-si-blue">🏗️</div><div class="pw-step-txt">اعتماد الخرائط والبدء رسمياً في أعمال البناء والإنشاء</div></div>
+        <div class="pw-req">
+          <div class="pw-req-lbl">متطلبات المرحلة الثانية</div>
+          <div class="pw-req-tags">
+            <span class="pw-req-tag">📐 مخططات التصنيع الجيد</span>
+            <span class="pw-req-tag">📐 تدفق العمليات</span>
+            <span class="pw-req-tag">📐 نظام HVAC</span>
+            <span class="pw-req-tag">📐 مناطق نظيفة A,B,C,D</span>
+          </div>
+        </div>
+      </div>
+      <div class="pw-arrow"><div class="pw-arrow-line"></div><div class="pw-arrow-head"></div></div>
+
+      <div class="pw-build">
+        <div class="pw-build-ico">🏗️</div>
+        <div><div class="pw-build-title">مرحلة البناء والتجهيز</div><div class="pw-build-sub">تنفيذ الإنشاءات · تركيب المعدات · تأهيل الأنظمة · إعداد وثائق التصنيع الجيد · تدريب الكوادر</div></div>
+      </div>
+      <div class="pw-arrow"><div class="pw-arrow-line"></div><div class="pw-arrow-head"></div></div>
+
+      <div class="pw-phase">
+        <div class="pw-ph-hdr pw-ph-violet">
+          <div class="pw-ph-num pw-pn-violet">3</div>
+          <div class="pw-ph-info">
+            <div class="pw-ph-lbl">المرحلة الثالثة · Phase Three</div>
+            <div class="pw-ph-name">الموافقة النهائية — إصدار شهادة التصنيع</div>
+            <div class="pw-ph-en">Final Approval — Manufacturing Certificate Issuance</div>
+          </div>
+          <div class="pw-ph-badge pw-pb-violet">⏱ حسب الجاهزية</div>
+        </div>
+        <div class="pw-step"><div class="pw-step-ico pw-si-violet">📋</div><div class="pw-step-txt">تقديم الملف الرئيسي للمصنع (SMF) مع كامل الوثائق وفق معايير التصنيع الجيد</div></div>
+        <div class="pw-step"><div class="pw-step-ico pw-si-violet">🔎</div><div class="pw-step-txt">زيارة تفتيشية شاملة من فريق مركز سلامة الدواء</div></div>
+        <div class="pw-step"><div class="pw-step-ico pw-si-violet">🔧</div><div class="pw-step-txt">معالجة الانحرافات المرصودة وتقديم خطة تصحيحية (CAPA) إن وجدت</div></div>
+        <div class="pw-step"><div class="pw-step-ico pw-si-violet">📜</div><div class="pw-step-txt">إصدار شهادة الممارسة الجيدة للتصنيع</div></div>
+        <div class="pw-req">
+          <div class="pw-req-lbl">متطلبات المرحلة الثالثة</div>
+          <div class="pw-req-tags">
+            <span class="pw-req-tag">📋 Site Master File (SMF)</span>
+            <span class="pw-req-tag">📋 إجراءات التشغيل الموحدة (SOPs)</span>
+            <span class="pw-req-tag">📋 سجلات التحقق والتأهيل</span>
+            <span class="pw-req-tag">📋 ISO 13485</span>
+          </div>
+        </div>
+      </div>
+      <div class="pw-arrow"><div class="pw-arrow-line"></div><div class="pw-arrow-head"></div></div>
+
+      <div class="pw-cert">
+        <div class="pw-cert-seal"><div class="pw-cert-seal-ico">📜</div></div>
+        <div>
+          <div class="pw-cert-lbl">الترخيص النهائي · Final License</div>
+          <div class="pw-cert-title">شهادة الممارسة الجيدة للتصنيع</div>
+          <div class="pw-cert-en">Good Manufacturing Practice Certificate</div>
+          <div class="pw-cert-badge">✓ Certified</div>
+        </div>
+      </div>
+      <div class="pw-arrow"><div class="pw-arrow-line"></div><div class="pw-arrow-head"></div></div>
+
+      <div class="pw-total">
+        <div class="pw-total-ico">📅</div>
+        <div>
+          <div class="pw-total-lbl">إجمالي المدة الإدارية للمراحل الثلاث</div>
+          <div class="pw-total-num">40 يوم عمل <span>للإجراءات الإدارية</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- MIGRATE PANEL -->
+<div class="migrate-overlay" id="migrateOverlay" onclick="closeMigrateOnBg(event)">
+  <div class="migrate-panel">
+    <div class="mp-header">
+      <div class="mp-title">⚡ Migrate — Google Sheets → Firestore</div>
+      <button class="mp-close" onclick="closeMigratePanel()">✕</button>
+    </div>
+    <div class="mp-body">
+      <div class="mp-desc">
+        📥 يجلب أحدث البيانات من Google Sheets ويحدّثها في Firestore فوراً.<br>
+        الداشبورد سيعرض البيانات الجديدة تلقائياً بعد اكتمال العملية.
+      </div>
+
+      <div id="mpSheetList">
+        <div class="mp-sheet"><span>🏭</span><span class="mp-sheet-name">مصانع قائمة</span><span class="mp-status mps-wait" id="mp-active">انتظار</span></div>
+        <div class="mp-sheet"><span>📜</span><span class="mp-sheet-name">صلاحيات الترخيص</span><span class="mp-status mps-wait" id="mp-licenses">انتظار</span></div>
+        <div class="mp-sheet"><span>🔨</span><span class="mp-sheet-name">مصانع قيد الانشاء</span><span class="mp-status mps-wait" id="mp-construction">انتظار</span></div>
+        <div class="mp-sheet"><span>✅</span><span class="mp-sheet-name">موافقات مبدئية</span><span class="mp-status mps-wait" id="mp-approvals">انتظار</span></div>
+        <div class="mp-sheet"><span>❌</span><span class="mp-sheet-name">طلبات مرفوضة</span><span class="mp-status mps-wait" id="mp-rejected">انتظار</span></div>
+        <div class="mp-sheet"><span>⏰</span><span class="mp-sheet-name">منتهية الصلاحية</span><span class="mp-status mps-wait" id="mp-expired">انتظار</span></div>
+        <div class="mp-sheet"><span>📞</span><span class="mp-sheet-name">تواصل</span><span class="mp-status mps-wait" id="mp-contact">انتظار</span></div>
+      </div>
+
+      <div class="mp-progress"><div class="mp-progress-bar" id="mpProgressBar"></div></div>
+      <div class="mp-log" id="mpLog"><span class="linfo">// اضغط "ابدأ التحديث" للبدء</span></div>
+      <button class="mp-go" id="mpGoBtn" onclick="runMigration()">⚡ ابدأ التحديث من Google Sheets</button>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div style="text-align:center;padding:28px 20px 32px;border-top:1px solid var(--border);margin-top:8px;background:var(--white)">
+  <span style="font-family:'Tajawal',sans-serif;font-size:.82rem;color:var(--text3);letter-spacing:.02em">
+    Designed & Developed by &nbsp;<b style="color:var(--primary);font-weight:700">Hatim Al Bulushi</b>&nbsp; ⚕️
+  </span>
+</div>
+
+<script>
+const SHEETS = {
+  active:       ' مصانع قائمة ',
+  licenses:     'صلاحيات الترخيص - مصانع قائمة ',
+  construction: ' مصانع قيد الانشاء ',
+  approvals:    'موافقات المبدئية',
+  rejected:     'طلبات لم تمنح موافة مبدئية',
+  expired:      'expired',
+  contact:      'تواصل'
+};
+const allData={};
+const state={active:{type:'الكل'},const:{type:'الكل'},approval:{year:'الكل',type:'الكل'}};
+
+// ── TOAST ──
+function showToast(msg,dur=3000){
+  let t=document.getElementById('_toast');
+  if(!t){t=document.createElement('div');t.id='_toast';
+    t.style.cssText='position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:#0f172a;color:#fff;padding:10px 22px;border-radius:24px;font-family:Cairo,sans-serif;font-size:.82rem;font-weight:600;z-index:9999;box-shadow:0 4px 20px rgba(0,0,0,.3);transition:opacity .4s;white-space:nowrap;pointer-events:none;border:1px solid #334155';
+    document.body.appendChild(t);}
+  t.textContent=msg;t.style.opacity='1';
+  clearTimeout(t._t);t._t=setTimeout(()=>t.style.opacity='0',dur);
+}
+
+// ── FIRESTORE LOAD ──
+async function loadAllSheets(forceRefresh=false){
+  const overlay =document.getElementById('loadingOverlay');
+  const statusEl=document.getElementById('loaderStatus');
+  const btn     =document.getElementById('refreshBtn');
+  const banner  =document.getElementById('errorBanner');
+  banner.style.display='none';
+  btn.classList.add('spinning');
+  overlay.classList.remove('hidden');
+
+  // Wait for Firebase module to be ready
+  let attempts=0;
+  while(!window._fetchFromFirestore && attempts<20){
+    await new Promise(r=>setTimeout(r,200));
+    attempts++;
+  }
+  if(!window._fetchFromFirestore){
+    overlay.classList.add('hidden');
+    btn.classList.remove('spinning');
+    banner.style.display='block';
+    banner.innerHTML='⚠️ تعذّر الاتصال بـ Firebase. تحقق من الإنترنت.';
+    return;
+  }
+
+  const keys=Object.keys(SHEETS);
+  const errors=[];
+  let done=0;
+
+  for(const key of keys){
+    statusEl.textContent=`⏳ تحميل: ${key}`;
+    try{
+      allData[key]=await window._fetchFromFirestore(key);
+    }catch(e){
+      errors.push(key+': '+e.message);
+      allData[key]={headers:[],rows:[]};
+    }
+    done++;
+  }
+
+  renderAll();
+  const now=new Date();
+  document.getElementById('lastUpdated').textContent=
+    `🔥 Firestore · ${now.toLocaleDateString('ar-OM')} ${now.toLocaleTimeString('ar-OM',{hour:'2-digit',minute:'2-digit'})}`;
+
+  if(errors.length){
+    banner.style.display='block';
+    banner.innerHTML=`⚠️ <b>خطأ في Firestore:</b><br>${errors.join('<br>')}<br><br>
+    تأكد أنك نفّذت migration أولاً من صفحة <b>migrate_to_firestore.html</b>`;
+  }
+
+  overlay.classList.add('hidden');
+  btn.classList.remove('spinning');
+  if(!errors.length) showToast('✅ تم تحميل البيانات من Firestore 🔥');
+}
+
+function normType(t){
+  t=(t||'').trim();
+  if(t.includes('مستلزمات')||t.toLowerCase().includes('medical')) return 'مستلزمات طبية';
+  if(t.includes('بيطر')) return 'أدوية بيطرية';
+  if(t.includes('خام')||t.toLowerCase().includes('api')||t.toLowerCase().includes('raw')) return 'مواد خام';
+  if(t.includes('بيولوج')||t.includes('حيوي')||t.toLowerCase().includes('bio')) return 'بيولوجية';
+  if(t.includes('دواء')||t.includes('أدوية')||t.includes('دوائ')||t.toLowerCase().includes('pharma')) return 'أدوية';
+  return t||'أخرى';
+}
+function normLoc(l){
+  l=l||'';const m=s=>l.toLowerCase().includes(s.toLowerCase());
+  if(m('صحار')||m('sohar')) return 'صحار';
+  if(m('صلالة')||m('salalah')||m('ريسوت')||m('raysut')) return 'صلالة';
+  if(m('رسيل')||m('rusayl')) return 'منطقة رسيل';
+  if(m('بركاء')||m('barka')) return 'بركاء';
+  if(m('خزائن')||m('khazain')) return 'خزائن بركاء';
+  if(m('نزوى')||m('nizwa')) return 'نزوى';
+  if(m('سمائل')||m('sumail')) return 'سمائل';
+  if(m('عبري')||m('ibri')) return 'عبري';
+  if(m('البريمي')||m('buraimi')) return 'البريمي';
+  if(m('مسفاة')||m('misfah')) return 'المسفاة';
+  if(m('مسقط')||m('muscat')||m('غبرة')||m('معبيلة')||m('بوشر')||m('الخوير')||m('روي')) return 'مسقط';
+  if(!l.trim()||l==='ـ'||l==='-') return null;
+  return 'أخرى';
+}
+function typeBadgeHtml(t){
+  const n=normType(t);
+  if(n==='مستلزمات طبية') return `<span class="type-badge badge-medical">${t}</span>`;
+  if(n==='أدوية بيطرية') return `<span class="type-badge badge-vet">${t}</span>`;
+  if(n==='مواد خام') return `<span class="type-badge badge-raw">${t}</span>`;
+  if(n==='بيولوجية') return `<span class="type-badge badge-bio">${t}</span>`;
+  if(n==='أدوية') return `<span class="type-badge badge-pharma">${t}</span>`;
+  if(t) return `<span class="type-badge badge-other">${t}</span>`;
+  return '';
+}
+function statusBadge(v){
+  if(!v) return '';
+  const vl=v.toLowerCase();
+  if(vl.includes('active')&&!vl.includes('inactive')) return `<span class="status-active">${v}</span>`;
+  if(vl.includes('inactive')||vl.includes('shutdown')) return `<span class="status-inactive">${v}</span>`;
+  return v;
+}
+function typeEmoji(t){const n=normType(t);if(n==='مستلزمات طبية')return'🩺 ';if(n==='أدوية بيطرية')return'🐾 ';if(n==='مواد خام')return'🧪 ';if(n==='بيولوجية')return'🔬 ';if(n==='أدوية')return'💊 ';return'';}
+function btnCls(v,fk){if(fk==='year')return v==='الكل'?'f-all':'f-year';const n=normType(v);if(v==='الكل')return'f-all';if(n==='مستلزمات طبية')return'f-medical';if(n==='أدوية بيطرية')return'f-vet';if(n==='مواد خام')return'f-raw';if(n==='أدوية')return'f-pharma';return'f-all';}
+function clearBtns(id){document.querySelectorAll(`#${id} .filter-btn`).forEach(b=>b.classList.remove('f-all','f-pharma','f-medical','f-vet','f-raw','f-year','f-bio'));}
+function findCol(headers,...kw){return headers.find(h=>kw.some(k=>h.toLowerCase().includes(k.toLowerCase())))||null;}
+function getTypes(rows,col){
+  const s=new Set();
+  rows.forEach(r=>{
+    const t=normType(r[col]||'');
+    if(t&&t!=='أخرى') s.add(t);
+  });
+  // Return in a logical order
+  const order=['أدوية','مستلزمات طبية','أدوية بيطرية','مواد خام','بيولوجية'];
+  const sorted=[];
+  order.forEach(o=>{ if(s.has(o)) sorted.push(o); });
+  s.forEach(t=>{ if(!order.includes(t)) sorted.push(t); });
+  return sorted;
+}
+
+function renderGenericTable(headId,bodyId,{headers,rows},typeColHint,statusColHint){
+  if(!headers.length){document.getElementById(bodyId).innerHTML=`<tr><td colspan="4" class="no-results">⚠️ لا توجد بيانات — تحقق من اسم الشيت</td></tr>`;return;}
+
+  // priority columns to show in table
+  const priorityKw=['sr','#','م','name','اسم','شركة','company','موقع','location','site','نوع','type','تصنيف','status','حالة'];
+  const shownHeaders=[];
+  headers.forEach(h=>{if(priorityKw.some(k=>h.toLowerCase().includes(k.toLowerCase()))&&shownHeaders.length<5) shownHeaders.push(h);});
+  headers.forEach(h=>{if(shownHeaders.length<4&&!shownHeaders.includes(h)) shownHeaders.push(h);});
+
+  document.getElementById(headId).innerHTML=`<tr>
+    ${shownHeaders.map(h=>`<th>${h}</th>`).join('')}
+    <th style="text-align:center;min-width:90px">التفاصيل</th>
+  </tr>`;
+
+  document.getElementById(bodyId).innerHTML=rows.map((row,ri)=>{
+    const search=Object.values(row).join(' ').toLowerCase();
+    const typeVal=typeColHint&&row[typeColHint]||'';
+    const nameCol=shownHeaders.find(h=>['name','اسم','شركة','company'].some(k=>h.toLowerCase().includes(k)))||shownHeaders[1]||shownHeaders[0];
+    const nameVal=(row[nameCol]||'').replace(/\\/g,'\\\\').replace(/'/g,"\\'").replace(/"/g,'&quot;');
+    const locCol=headers.find(h=>['موقع','location','site'].some(k=>h.toLowerCase().includes(k)));
+    const locVal=(locCol?row[locCol]||'':'').replace(/'/g,"\\'");
+    const safeRow=JSON.stringify(row);
+    const safeHeaders=JSON.stringify(headers);
+    return`<tr data-search="${search.replace(/"/g,'')}" data-type="${typeVal}">
+      ${shownHeaders.map((h,i)=>{
+        const v=row[h]||'';
+        const isType=typeColHint===h;
+        const isStatus=statusColHint===h;
+        const cell=isType?typeBadgeHtml(v):isStatus?statusBadge(v):v;
+        const truncated=v.length>60?v.substring(0,55)+'…':cell;
+        const display=isType||isStatus?cell:truncated;
+        const style=i===0?'white-space:nowrap;color:var(--text3);font-size:.75rem;font-weight:700;text-align:center':i===1?'font-weight:700;color:var(--text)':'color:var(--text2)';
+        return`<td style="${style}">${display}</td>`;
+      }).join('')}
+      <td style="text-align:center">
+        <button class="detail-btn" onclick="openModal(this)">🔍 تفاصيل</button>
+      </td>
+    </tr>`;
+  }).join('');
+
+  // store row data on buttons
+  document.querySelectorAll(`#${bodyId} .detail-btn`).forEach((btn,ri)=>{
+    btn._row=rows[ri];
+    btn._headers=headers;
+  });
+}
+
+function renderAll(){
+  renderActive();renderConst();renderApprovals();
+  renderGeneric('licenses','licensesHead','licensesBody','licensesBadge',null,'ترخيص','tc-licenses');
+  renderGeneric('rejected','rejectedHead','rejectedBody','rejectedBadge','kpi-rejected','طلب','tc-rejected');
+  renderGeneric('expired','expiredHead','expiredBody','expiredBadge','kpi-expired','مصنع','tc-expired');
+  renderGeneric('contact','contactHead','contactBody','contactBadge',null,'جهة',null);
+  renderOverview();
+
+  // Apply mobile card view after short delay for DOM to settle
+  if(isMobile()){
+    setTimeout(()=>{
+      const d=allData.active||{headers:[],rows:[]};
+      mobileCardView('activeBody', d.headers);
+      const dc=allData.construction||{headers:[],rows:[]};
+      mobileCardView('constBody', dc.headers);
+      mobileCardView('licensesBody', allData.licenses?.headers||[]);
+      mobileCardView('rejectedBody', allData.rejected?.headers||[]);
+      mobileCardView('expiredBody', allData.expired?.headers||[]);
+      mobileCardView('contactBody', allData.contact?.headers||[]);
+    }, 100);
+  }
+}
+
+function renderActive(){
+  const d=allData.active||{headers:[],rows:[]};
+  const typeCol=findCol(d.headers,'نوع','type','تصنيف');
+  const statusCol=findCol(d.headers,'status','الحالة','حالة');
+  renderGenericTable('activeHead','activeBody',d,typeCol,statusCol);
+  const c=d.rows.length;
+  document.getElementById('activeBadge').textContent=c+' مصنع';
+  document.getElementById('activeCount').textContent=c;
+  document.getElementById('kpi-active').textContent=c;
+  document.getElementById('tc-active').textContent=c;
+  const types=getTypes(d.rows,typeCol||'');
+  document.getElementById('activeTypeBtns').innerHTML=['الكل',...types].map(t=>`<button class="filter-btn ${state.active.type===t?btnCls(t,'type'):t==='الكل'?'f-all':''}" onclick="state.active.type='${t}';clearBtns('activeTypeBtns');this.classList.add('${btnCls(t,'type')}');applySearch('active');">${typeEmoji(t)}${t}</button>`).join('');
+}
+function renderConst(){
+  const d=allData.construction||{headers:[],rows:[]};
+  const typeCol=findCol(d.headers,'نوع','type','تصنيف');
+  renderGenericTable('constHead','constBody',d,typeCol,null);
+  const c=d.rows.length;
+  document.getElementById('constBadge').textContent=c+' مصنع';
+  document.getElementById('constCount').textContent=c;
+  document.getElementById('kpi-construction').textContent=c;
+  document.getElementById('tc-const').textContent=c;
+  const types=getTypes(d.rows,typeCol||'');
+  document.getElementById('constTypeBtns').innerHTML=['الكل',...types].map(t=>`<button class="filter-btn ${state.const.type===t?btnCls(t,'type'):t==='الكل'?'f-all':''}" onclick="state.const.type='${t}';clearBtns('constTypeBtns');this.classList.add('${btnCls(t,'type')}');applySearch('const');">${typeEmoji(t)}${t}</button>`).join('');
+}
+function renderApprovals(){
+  const d=allData.approvals||{headers:[],rows:[]};
+  const c=d.rows.length;
+  document.getElementById('approvalBadge').textContent=c+' موافقة';
+  document.getElementById('approvalCount').textContent=c;
+  document.getElementById('kpi-approvals').textContent=c;
+  document.getElementById('tc-approval').textContent=c;
+  const dateCol=findCol(d.headers,'تاريخ','date','سنة')||d.headers[0];
+  const nameCol=findCol(d.headers,'اسم','شركة','name','Company')||d.headers[1];
+  const typeCol=findCol(d.headers,'نوع','type','تصنيف')||d.headers[2];
+  const locCol=findCol(d.headers,'موقع','منطقة','location','Site')||d.headers[3];
+  const sorted=[...d.rows].sort((a,b)=>new Date(b[dateCol]||0)-new Date(a[dateCol]||0));
+  document.getElementById('approvalTimeline').innerHTML=sorted.map(row=>{
+    const raw=row[dateCol]||'';const dt=new Date(raw);
+    const dateStr=isNaN(dt)?raw:dt.toLocaleDateString('ar-OM',{year:'numeric',month:'long',day:'numeric'});
+    const year=isNaN(dt)?(raw.match(/\d{4}/)||[''])[0]:String(dt.getFullYear());
+    const type=row[typeCol]||'';
+    const normT=normType(type);
+    const extras=d.headers.filter(h=>h!==dateCol&&h!==nameCol&&h!==typeCol&&h!==locCol).filter(h=>row[h]).map(h=>`<b>${h}:</b> ${row[h]}`).join(' · ');
+    return`<div class="tl-item" data-year="${year}" data-type="${normT}" data-search="${Object.values(row).join(' ').toLowerCase().replace(/"/g,'')}">
+      <div class="tl-date">📅 ${dateStr}</div>
+      <div class="tl-name">${row[nameCol]||'—'}</div>
+      <div class="tl-meta">
+        ${row[locCol]?`<span class="tl-loc">📍 ${row[locCol]}</span>`:''}
+        ${typeBadgeHtml(normT||type)}
+      </div>
+      ${extras?`<div class="tl-extra" style="white-space:normal;word-break:break-word;overflow-wrap:anywhere">${extras}</div>`:''}
+    </div>`;
+  }).join('');
+  const years=[...new Set(d.rows.map(r=>{const dt=new Date(r[dateCol]||'');return isNaN(dt)?(r[dateCol]||'').match(/\d{4}/)?r[dateCol].match(/\d{4}/)[0]:'':String(dt.getFullYear());}).filter(Boolean))].sort();
+  document.getElementById('approvalYearBtns').innerHTML=['الكل',...years].map(y=>`<button class="filter-btn ${state.approval.year===y||y==='الكل'&&state.approval.year==='الكل'?'f-year':''}" onclick="state.approval.year='${y}';clearBtns('approvalYearBtns');this.classList.add('f-year');applySearch('approval');">${y}</button>`).join('');
+  const types=getTypes(d.rows,typeCol);
+  document.getElementById('approvalTypeBtns').innerHTML=['الكل',...types].map(t=>`<button class="filter-btn ${state.approval.type===t?btnCls(t,'type'):t==='الكل'?'f-all':''}" onclick="state.approval.type='${t}';clearBtns('approvalTypeBtns');this.classList.add('${btnCls(t,'type')}');applySearch('approval');">${typeEmoji(t)}${t}</button>`).join('');
+  const yc={},tc={};
+  d.rows.forEach(r=>{
+    const dt=new Date(r[dateCol]||'');const yr=isNaN(dt)?(r[dateCol]||'').match(/\d{4}/)?r[dateCol].match(/\d{4}/)[0]:'غير محدد':String(dt.getFullYear());
+    yc[yr]=(yc[yr]||0)+1;const t=normType(r[typeCol]||'');tc[t]=(tc[t]||0)+1;
+  });
+  renderBarChart('approvalYearChart',yc,l=>({'2024':var_primary,'2025':var_orange,'2026':var_purple,'2023':var_blue}[l]||'#94a3b8'));
+  renderBarChart('approvalTypeChart',tc,l=>({'أدوية':var_blue,'مستلزمات طبية':var_green,'أدوية بيطرية':var_purple,'مواد خام':var_orange}[l]||'#94a3b8'));
+}
+const var_primary='#006D77',var_orange='#D97706',var_purple='#7C3AED',var_blue='#2563EB',var_green='#059669',var_red='#DC2626';
+
+function renderGeneric(key,headId,bodyId,badgeId,kpiId,unit,tcId){
+  const d=allData[key]||{headers:[],rows:[]};
+  renderGenericTable(headId,bodyId,d,null,null);
+  const c=d.rows.length;
+  document.getElementById(badgeId).textContent=c+' '+unit;
+  if(kpiId) document.getElementById(kpiId).textContent=c;
+  if(tcId&&document.getElementById(tcId)) document.getElementById(tcId).textContent=c;
+}
+
+function renderOverview(){
+  const ac=allData.active?.rows?.length||0,cc=allData.construction?.rows?.length||0;
+  const apc=allData.approvals?.rows?.length||0,rc=allData.rejected?.rows?.length||0,ec=allData.expired?.rows?.length||0;
+  const total=ac+cc+apc+rc+ec;
+  document.getElementById('kpi-total').textContent=total;
+
+  // Donut
+  const segs=[{l:'قائمة',c:ac,col:var_primary},{l:'قيد الإنشاء',c:cc,col:var_orange},{l:'موافقات',c:apc,col:var_blue},{l:'مرفوضة',c:rc,col:var_red},{l:'منتهية',c:ec,col:var_purple}].filter(s=>s.c>0);
+  const circ=2*Math.PI*58;let off=0;
+  const svgC=segs.map(s=>{const dash=(s.c/total)*circ;const el=`<circle cx="75" cy="75" r="58" fill="none" stroke="${s.col}" stroke-width="22" stroke-dasharray="${dash.toFixed(2)} ${(circ-dash).toFixed(2)}" stroke-dashoffset="${(-off).toFixed(2)}" transform="rotate(-90 75 75)"/>`;off+=dash;return el;}).join('');
+  document.getElementById('donutSvg').innerHTML=`<circle cx="75" cy="75" r="58" fill="none" stroke="#E8EEF5" stroke-width="22"/>${svgC}<text x="75" y="70" text-anchor="middle" fill="#1A2535" font-size="24" font-weight="800" font-family="Tajawal">${total}</text><text x="75" y="88" text-anchor="middle" fill="#6B829A" font-size="11" font-family="Cairo">مشروع</text>`;
+  document.getElementById('donutLegend').innerHTML=segs.map(s=>`<div class="legend-item"><div class="legend-dot" style="background:${s.col}"></div><span class="legend-name">${s.l}</span><span class="legend-pct">${s.c} · ${Math.round(s.c/total*100)}%</span></div>`).join('');
+
+  // Type bar
+  const tc={};const d=allData.active||{headers:[],rows:[]};
+  const tcol=findCol(d.headers,'نوع','type','تصنيف');
+  d.rows.forEach(r=>{const t=normType(tcol?r[tcol]||'':'');tc[t]=(tc[t]||0)+1;});
+  renderBarChart('typeBarChart',tc,l=>({'أدوية':var_blue,'مستلزمات طبية':var_green,'أدوية بيطرية':var_purple,'مواد خام':var_orange,'بيولوجية':var_red}[l]||'#94a3b8'));
+
+  // MAP
+  renderMap();
+}
+
+// gov name normalizer — maps location text → governorate
+function locToGov(l){
+  l=(l||'').trim();
+  const m=s=>l.toLowerCase().includes(s.toLowerCase());
+  if(m('مسندم')||m('musandam')||m('خصب')||m('khasab')) return 'مسندم';
+  if(m('البريمي')||m('buraimi')) return 'البريمي';
+  if(m('عبري')||m('ibri')||m('ينقل')||m('yanqul')||m('ظاهرة')||m('dhahirah')) return 'الظاهرة';
+  if(m('صحار')||m('sohar')||m('شناص')||m('liwa')||m('لوى')||m('شمال الباطنة')||m('north batinah')) return 'شمال الباطنة';
+  if(m('بركاء')||m('barka')||m('خزائن')||m('المسفاة')||m('مسفاة')||m('مدائن')||m('جنوب الباطنة')||m('south batinah')||m('الرستاق')||m('rustaq')) return 'جنوب الباطنة';
+  if(m('مسقط')||m('muscat')||m('رسيل')||m('rusayl')||m('روي')||m('ruwi')||m('غبرة')||m('ghoubra')||m('بوشر')||m('bowsher')||m('معبيلة')||m('maabilah')||m('الخوير')||m('khuwair')||m('مطرح')||m('السيب')||m('seeb')||m('قريات')) return 'مسقط';
+  if(m('نزوى')||m('nizwa')||m('بهلاء')||m('بهلا')||m('bahla')||m('سمائل')||m('sumail')||m('الداخلية')||m('dakhiliyah')||m('منح')||m('إزكي')||m('izki')||m('adam')||m('آدم')) return 'الداخلية';
+  if(m('صور')||m('sur')||m('شمال الشرقية')||m('north sharqiyah')||m('بدية')||m('ibra')||m('إبراء')||m('المضيبي')||m('mudhaibi')) return 'شمال الشرقية';
+  if(m('جنوب الشرقية')||m('south sharqiyah')||m('الكامل')||m('جعلان')||m('مصيرة')||m('هيما')||m('haima')||m('duqm')||m('دقم')) return 'جنوب الشرقية';
+  if(m('الوسطى')||m('wusta')||m('محوت')||m('الدقم')) return 'الوسطى';
+  if(m('صلالة')||m('salalah')||m('ريسوت')||m('raysut')||m('ظفار')||m('dhofar')||m('مرباط')||m('طاقة')||m('سدح')||m('شليم')) return 'ظفار';
+  return null;
+}
+
+// gov centre coords in the SVG viewBox for bubble placement
+const GOV_CENTRES={
+  'الداخلية':{x:408,y:255},
+  'جنوب الباطنة':{x:415,y:185},
+  'شمال الباطنة':{x:360,y:130},
+  'البريمي':{x:255,y:175},
+  'الظاهرة':{x:290,y:235},
+  'الوسطى':{x:410,y:430},
+  'شمال الشرقية':{x:500,y:285},
+  'جنوب الشرقية':{x:520,y:350},
+  'ظفار':{x:185,y:590},
+  'مسندم':{x:310,y:32},
+  'مسقط':{x:485,y:185},
+};
+
+let govData={};
+let selectedGov=null;
+
+const GOV_COLORS={
+  'مسقط':        {base:'#FBBF24',light:'#FEF3C7',dark:'#92400E'},
+  'ظفار':        {base:'#34D399',light:'#D1FAE5',dark:'#065F46'},
+  'الداخلية':    {base:'#60A5FA',light:'#DBEAFE',dark:'#1E40AF'},
+  'الوسطى':      {base:'#F9A8D4',light:'#FCE7F3',dark:'#9D174D'},
+  'شمال الباطنة':{base:'#A78BFA',light:'#EDE9FE',dark:'#5B21B6'},
+  'جنوب الباطنة':{base:'#6EE7B7',light:'#D1FAE5',dark:'#065F46'},
+  'الظاهرة':     {base:'#FCA5A5',light:'#FEE2E2',dark:'#991B1B'},
+  'البريمي':     {base:'#93C5FD',light:'#DBEAFE',dark:'#1D4ED8'},
+  'شمال الشرقية':{base:'#86EFAC',light:'#DCFCE7',dark:'#166534'},
+  'جنوب الشرقية':{base:'#FCD34D',light:'#FEF9C3',dark:'#854D0E'},
+  'مسندم':       {base:'#F0ABFC',light:'#FAE8FF',dark:'#86198F'},
+};
+
+function renderMap(){
+  // collect all rows from active + construction
+  const allRows=[...(allData.active?.rows||[]),...(allData.construction?.rows||[])];
+  const lcol1=findCol(allData.active?.headers||[],'موقع','location','site');
+  const lcol2=findCol(allData.construction?.headers||[],'موقع','location','site');
+
+  govData={};
+  allRows.forEach(row=>{
+    const rawLoc=(lcol1&&row[lcol1])||(lcol2&&row[lcol2])||'';
+    const gov=locToGov(rawLoc);
+    if(gov){
+      if(!govData[gov]) govData[gov]={count:0,factories:[]};
+      govData[gov].count++;
+      govData[gov].factories.push(row);
+    }
+  });
+
+  const maxCount=Math.max(...Object.values(govData).map(g=>g.count),1);
+
+  // color SVG regions
+  const svg=document.getElementById('omanMap');
+  svg.querySelectorAll('.gov-region').forEach(el=>{
+    const gov=el.dataset.gov;
+    const count=govData[gov]?.count||0;
+    const path=el.querySelector('.gov-path');
+    if(!path) return;
+    const col=GOV_COLORS[gov];
+    if(!col){path.style.fill='#E2E8F0';return;}
+    if(count===0){
+      path.style.fill=col.light;
+    } else {
+      // active gov: use base color, more factories = slightly darker
+      const intensity=0.4+(count/maxCount)*0.6;
+      path.style.fill=col.base;
+      path.style.opacity=String(0.7+intensity*0.3);
+    }
+  });
+
+  // render count bubbles — color matched to gov
+  const bubblesG=document.getElementById('mapBubbles');
+  if(bubblesG){
+    bubblesG.innerHTML=Object.entries(govData).map(([gov,d])=>{
+      const c=GOV_CENTRES[gov]; if(!c) return '';
+      const col=GOV_COLORS[gov]||{base:'#006D77',dark:'#003840'};
+      const r=14+Math.round((d.count/maxCount)*8);
+      return `<g onclick="selectGov('${gov}')" style="cursor:pointer">
+        <circle cx="${c.x}" cy="${c.y}" r="${r}" fill="${col.dark}" stroke="#fff" stroke-width="2" opacity="0.92"/>
+        <text x="${c.x}" y="${c.y+4}" text-anchor="middle" font-family="Tajawal" font-size="11" font-weight="800" fill="#fff">${d.count}</text>
+      </g>`;
+    }).join('');
+  }
+
+  // render side list with matching colors
+  const sorted=Object.entries(govData).sort((a,b)=>b[1].count-a[1].count);
+  document.getElementById('govList').innerHTML=sorted.map(([gov,data])=>{
+    const col=GOV_COLORS[gov]||{base:'#64748b',dark:'#334155'};
+    return`<div class="gov-bar${selectedGov===gov?' selected':''}" onclick="selectGov('${gov}')" style="${selectedGov===gov?`background:${col.light};border:1px solid ${col.base}`:''}">
+      <div style="width:10px;height:10px;border-radius:3px;background:${col.base};flex-shrink:0"></div>
+      <div class="gov-bar-name">${gov}</div>
+      <div class="gov-bar-track"><div class="gov-bar-fill" style="width:${(data.count/maxCount*100).toFixed(0)}%;background:${col.base}"></div></div>
+      <div class="gov-bar-count" style="color:${col.dark}">${data.count}</div>
+    </div>`;
+  }).join('');
+}
+
+function selectGov(gov){
+  selectedGov=gov;
+  // highlight on map
+  document.querySelectorAll('.gov-region').forEach(el=>{
+    el.classList.toggle('active',el.dataset.gov===gov);
+  });
+  document.querySelectorAll('.gov-bar').forEach(el=>{
+    el.classList.toggle('selected',el.textContent.trim().startsWith(gov));
+  });
+  const data=govData[gov];
+  const detail=document.getElementById('govDetail');
+  const col=GOV_COLORS[gov]||{light:'#EBF5F7',base:'#006D77',dark:'#004A50'};
+
+  if(!data||data.count===0){
+    detail.style.display='block';
+    detail.style.borderColor=col.base;
+    detail.innerHTML=`<div style="color:var(--text3);font-size:.82rem;text-align:center;padding:8px">لا توجد مصانع مسجّلة في ${gov}</div>`;
+    detail.scrollIntoView({behavior:'smooth',block:'nearest'});
+    return;
+  }
+
+  const nameCol=allData.active?.headers?.find(h=>['name','اسم','شركة','company'].some(k=>h.toLowerCase().includes(k)))||'';
+  const typeCol=findCol(allData.active?.headers||[],'نوع','type','تصنيف');
+
+  detail.style.display='block';
+  detail.style.borderColor=col.base;
+  detail.innerHTML=`
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+      <div style="display:flex;align-items:center;gap:7px">
+        <div style="width:12px;height:12px;border-radius:3px;background:${col.base};flex-shrink:0"></div>
+        <span style="font-family:'Tajawal',sans-serif;font-size:.95rem;font-weight:800;color:${col.dark}">${gov}</span>
+        <span style="background:${col.light};border:1px solid ${col.base};color:${col.dark};border-radius:20px;padding:1px 9px;font-size:.7rem;font-weight:700">${data.count} مصنع</span>
+      </div>
+      <button onclick="document.getElementById('govDetail').style.display='none'" style="background:none;border:none;cursor:pointer;color:var(--text3);font-size:1rem;line-height:1;padding:2px 4px">✕</button>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:5px">
+      ${data.factories.slice(0,10).map(row=>{
+        const name=(nameCol?row[nameCol]||'—':'—').trim();
+        const type=typeCol?row[typeCol]||'':'';
+        const displayName=name.length>55?name.substring(0,53)+'…':name;
+        return`<div style="display:flex;align-items:center;gap:7px;padding:6px 8px;background:var(--bg);border-radius:7px">
+          <span style="font-size:.76rem;color:var(--text);font-weight:600;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap" title="${name}">${displayName}</span>
+          ${type?`<span style="flex-shrink:0">${typeBadgeHtml(type)}</span>`:''}
+        </div>`;
+      }).join('')}
+      ${data.count>10?`<div style="font-size:.7rem;color:var(--text3);text-align:center;padding:4px;background:var(--bg);border-radius:7px">+ ${data.count-10} مصانع أخرى</div>`:''}
+    </div>`;
+
+  // smooth scroll to detail
+  setTimeout(()=>detail.scrollIntoView({behavior:'smooth',block:'nearest'}),50);
+}
+
+function renderBarChart(id,countObj,colorFn){
+  const el=document.getElementById(id);if(!el)return;
+  const data=Object.entries(countObj).sort((a,b)=>b[1]-a[1]);
+  const max=Math.max(...data.map(d=>d[1]),1);
+  el.innerHTML=data.map(([l,c])=>`<div class="bar-item"><div class="bar-header"><span class="bar-label">${l}</span><span class="bar-count">${c}</span></div><div class="bar-track"><div class="bar-fill" style="width:${(c/max*100).toFixed(1)}%;background:${colorFn(l)}"></div></div></div>`).join('');
+}
+
+function applySearch(tab){
+  if(tab==='active'){
+    const s=(document.getElementById('searchActive').value||'').toLowerCase();
+    const tf=state.active.type;let n=0;
+    document.querySelectorAll('#activeBody tr[data-search]').forEach(row=>{
+      const show=(!s||row.dataset.search.includes(s))&&(tf==='الكل'||normType(row.dataset.type||'')===tf);
+      row.style.display=show?'':'none';if(show)n++;
+    });
+    document.getElementById('activeCount').textContent=n;document.getElementById('activeBadge').textContent=n+' مصنع';
+
+  }else if(tab==='const'){
+    const s=(document.getElementById('searchConst').value||'').toLowerCase();
+    const tf=state.const.type;let n=0;
+    document.querySelectorAll('#constBody tr[data-search]').forEach(row=>{
+      const show=(!s||row.dataset.search.includes(s))&&(tf==='الكل'||normType(row.dataset.type||'')===tf);
+      row.style.display=show?'':'none';if(show)n++;
+    });
+    document.getElementById('constCount').textContent=n;document.getElementById('constBadge').textContent=n+' مصنع';
+
+  }else if(tab==='approval'){
+    const s=(document.getElementById('searchApproval').value||'').toLowerCase();
+    const yf=state.approval.year, tf=state.approval.type;
+    let n=0;
+    const visibleItems=[];
+
+    document.querySelectorAll('.tl-item').forEach(item=>{
+      const yearMatch = yf==='الكل' || item.dataset.year===yf;
+      const typeMatch = tf==='الكل' || item.dataset.type===tf;
+      const searchMatch = !s || item.dataset.search.includes(s);
+      const show = yearMatch && typeMatch && searchMatch;
+      item.style.display=show?'':'none';
+      if(show){ n++; visibleItems.push(item); }
+    });
+    document.getElementById('approvalCount').textContent=n;
+    document.getElementById('approvalBadge').textContent=n+' موافقة';
+
+    // update charts based on visible items only
+    const yc={}, tc={};
+    visibleItems.forEach(item=>{
+      const yr=item.dataset.year||'غير محدد';
+      yc[yr]=(yc[yr]||0)+1;
+      const t=item.dataset.type||'أخرى';
+      tc[t]=(tc[t]||0)+1;
+    });
+    const yColors={'2024':var_primary,'2025':var_orange,'2026':var_purple,'2023':var_blue};
+    const tColors={'أدوية':var_blue,'مستلزمات طبية':var_green,'أدوية بيطرية':var_purple,'مواد خام':var_orange};
+    renderBarChart('approvalYearChart', yc, l=>yColors[l]||'#94a3b8');
+    renderBarChart('approvalTypeChart', tc, l=>tColors[l]||'#94a3b8');
+
+  }else{
+    const sEl=document.getElementById('search'+tab.charAt(0).toUpperCase()+tab.slice(1));
+    const s=sEl?(sEl.value||'').toLowerCase():'';
+    document.querySelectorAll(`#${tab}Body tr[data-search]`).forEach(row=>{row.style.display=(!s||row.dataset.search.includes(s))?'':'none';});
+  }
+}
+
+function showTab(name,btn){
+  document.querySelectorAll('.tab-content').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
+  document.getElementById('tab-'+name).classList.add('active');
+  if(btn)btn.classList.add('active');
+}
+
+// ── EXPORT FUNCTIONS ──
+
+function exportPDF(tableId, title){
+  const now = new Date().toLocaleDateString('ar-OM');
+  const win = window.open('','_blank');
+
+  // For approvals build from data (timeline view)
+  let tableHTML = '';
+  if(tableId === 'approvalTable'){
+    const d = allData.approvals||{headers:[],rows:[]};
+    tableHTML = buildHTMLTable(d.headers, d.rows);
+  } else {
+    const tbl = document.getElementById(tableId);
+    if(!tbl){ alert('لا توجد بيانات للتصدير'); win.close(); return; }
+    // Clone and remove detail-btn column
+    const clone = tbl.cloneNode(true);
+    clone.querySelectorAll('th:last-child,td:last-child').forEach(el=>el.remove());
+    tableHTML = clone.outerHTML;
+  }
+
+  win.document.write(`<!DOCTYPE html><html dir="rtl" lang="ar">
+<head><meta charset="UTF-8"><title>${title}</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+<style>
+  body{font-family:'Cairo',sans-serif;padding:20px;color:#1A2535;direction:rtl;font-size:12px}
+  h2{color:#006D77;font-size:16px;margin-bottom:3px}
+  .meta{font-size:10px;color:#6B829A;margin-bottom:16px;border-bottom:2px solid #006D77;padding-bottom:8px}
+  table{width:100%;border-collapse:collapse}
+  th{background:#006D77;color:#fff;padding:7px 9px;text-align:right;font-size:10px;font-weight:700}
+  td{padding:6px 9px;border-bottom:1px solid #e2e8f0;vertical-align:top;font-size:10px;word-break:break-word}
+  tr:nth-child(even) td{background:#f8fafc}
+  .footer{margin-top:16px;font-size:9px;color:#94a3b8;text-align:center;border-top:1px solid #e2e8f0;padding-top:8px}
+  span[class*="badge"]{display:inline;border:none;background:none;font-size:10px}
+  button{display:none}
+  @media print{@page{margin:12mm;size:A4 landscape}}
+</style></head>
+<body>
+<h2>🏥 ${title}</h2>
+<div class="meta">تاريخ التصدير: ${now} &nbsp;|&nbsp; المصانع الطبية الوطنية · سلطنة عُمان</div>
+${tableHTML}
+<div class="footer">Designed by Hatim Al Bulushi &nbsp;·&nbsp; المصانع الطبية الوطنية &nbsp;·&nbsp; سلطنة عُمان</div>
+<script>window.onload=()=>{window.print()}<\/script>
+</body></html>`);
+  win.document.close();
+}
+
+function buildHTMLTable(headers, rows){
+  if(!headers.length) return '<p>لا توجد بيانات</p>';
+  return `<table>
+    <thead><tr>${headers.map(h=>`<th>${h}</th>`).join('')}</tr></thead>
+    <tbody>${rows.map(row=>`<tr>${headers.map(h=>`<td>${row[h]||''}</td>`).join('')}</tr>`).join('')}</tbody>
+  </table>`;
+}
+
+function exportExcel(dataKey, title){
+  const d = allData[dataKey]||{headers:[],rows:[]};
+  if(!d.headers.length){ alert('لا توجد بيانات للتصدير'); return; }
+
+  // Build CSV with BOM for Arabic support in Excel
+  const BOM = '\uFEFF';
+  const escape = v => {
+    v = String(v||'').replace(/"/g,'""');
+    return `"${v}"`;
+  };
+  const header = d.headers.map(escape).join(',');
+  const rowsCSV = d.rows.map(row => d.headers.map(h=>escape(row[h]||'')).join(',')).join('\n');
+  const csv = BOM + header + '\n' + rowsCSV;
+
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8'});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `${title}_${new Date().toLocaleDateString('en-GB').replace(/\//g,'-')}.csv`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+// ── MIGRATE PANEL ──
+const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwuXDsWsROVEfe1SiCoOEgftl1Pa_5kEKuNhyc33du-R_mfOrYCyWrOQ76ew9LKFUcPgQ/exec';
+
+function openMigratePanel(){
+  document.getElementById('migrateOverlay').classList.add('open');
+  document.body.style.overflow='hidden';
+  resetMigratePanel();
+}
+function closeMigratePanel(){
+  document.getElementById('migrateOverlay').classList.remove('open');
+  document.body.style.overflow='';
+}
+function closeMigrateOnBg(e){
+  if(e.target===document.getElementById('migrateOverlay')) closeMigratePanel();
+}
+function resetMigratePanel(){
+  Object.keys(SHEETS).forEach(k=>{
+    const el=document.getElementById('mp-'+k);
+    if(el){el.textContent='انتظار';el.className='mp-status mps-wait';}
+  });
+  document.getElementById('mpProgressBar').style.width='0%';
+  document.getElementById('mpLog').innerHTML='<span class="linfo">// اضغط "ابدأ التحديث" للبدء</span>';
+  document.getElementById('mpGoBtn').disabled=false;
+  document.getElementById('mpGoBtn').textContent='⚡ ابدأ التحديث من Google Sheets';
+}
+function mpLog(msg,type='linfo'){
+  const el=document.getElementById('mpLog');
+  el.innerHTML+=`\n<span class="${type}">${msg}</span>`;
+  el.scrollTop=el.scrollHeight;
+}
+function mpSetStatus(key,text,cls){
+  const el=document.getElementById('mp-'+key);
+  if(el){el.textContent=text;el.className='mp-status '+cls;}
+}
+
+async function fetchFromSheets(name){
+  const r=await fetch(`${APPS_SCRIPT_URL}?sheet=${encodeURIComponent(name)}`);
+  if(!r.ok) throw new Error(`HTTP ${r.status}`);
+  const j=await r.json();
+  if(j.error) throw new Error(j.error);
+  return j;
+}
+
+async function runMigration(){
+  // Wait for Firestore write function
+  if(!window._writeToFirestore){
+    mpLog('❌ Firebase لم يتحمّل بعد، انتظر ثانية وحاول مجدداً','lerr');
+    return;
+  }
+
+  const btn=document.getElementById('mpGoBtn');
+  btn.disabled=true;
+  btn.textContent='⏳ جاري التحديث...';
+
+  const keys=Object.keys(SHEETS);
+  let done=0, totalRows=0;
+
+  for(const key of keys){
+    const name=SHEETS[key];
+    mpSetStatus(key,'⏳ جاري...','mps-run');
+    mpLog(`📥 تحميل: ${name.trim()}`,'linfo');
+
+    try{
+      // 1. Fetch from Google Sheets
+      const data=await fetchFromSheets(name);
+      mpLog(`  → ${data.rows.length} سجل`,'linfo');
+
+      // 2. Write to Firestore
+      const written=await window._writeToFirestore(key, data.headers, data.rows);
+      totalRows+=written;
+
+      mpSetStatus(key,`✅ ${written}`,'mps-ok');
+      mpLog(`  ✅ تم: ${written} سجل`,'lok');
+    }catch(e){
+      mpSetStatus(key,'❌ خطأ','mps-err');
+      mpLog(`  ❌ ${e.message}`,'lerr');
+    }
+
+    done++;
+    document.getElementById('mpProgressBar').style.width=`${(done/keys.length)*100}%`;
+  }
+
+  mpLog(`\n🎉 اكتمل! ${totalRows} سجل في Firestore`,'lok');
+  btn.textContent=`✅ تم تحديث ${totalRows} سجل!`;
+  btn.style.background='linear-gradient(135deg,#22c55e,#16a34a)';
+  btn.disabled=false;
+  btn.onclick=()=>{closeMigratePanel();loadAllSheets(true);};
+  btn.textContent=`✅ تم! اضغط لتحديث الداشبورد (${totalRows} سجل)`;
+
+  showToast('🎉 تم تحديث Firestore من Google Sheets!',4000);
+}
+
+// ── DETAIL PAGE FUNCTIONS ──
+function openModal(btn){
+  const row=btn._row||{};
+  const headers=btn._headers||Object.keys(row);
+
+  // find key columns
+  const nameCol=headers.find(h=>['name','اسم','شركة','company'].some(k=>h.toLowerCase().includes(k)))||headers[1]||headers[0];
+  const locCol=headers.find(h=>['موقع','location','site'].some(k=>h.toLowerCase().includes(k)));
+  const typeCol=headers.find(h=>['نوع','type','تصنيف'].some(k=>h.toLowerCase().includes(k)));
+  const statusCol=headers.find(h=>['status','حالة','الحالة'].some(k=>h.toLowerCase().includes(k)));
+
+  const name=row[nameCol]||'—';
+  const loc=locCol?row[locCol]||'':'';
+  const type=typeCol?row[typeCol]||'':'';
+  const status=statusCol?row[statusCol]||'':'';
+
+  // set header
+  document.getElementById('dpTitle').textContent=name;
+  document.getElementById('dpSub').textContent=loc?'📍 '+loc:'';
+
+  // categorize fields
+  const longKw=['manufacturing','خطوط','إنتاج','activities','الأنشطة','ملاحظ','note','lines'];
+  const contactKw=['تواصل','email','phone','هاتف','mail','contact'];
+  const skipCols=new Set([nameCol,locCol].filter(Boolean));
+
+  const mainFields=[], longFields=[], contactFields=[];
+  headers.forEach(h=>{
+    if(skipCols.has(h)) return;
+    const v=(row[h]||'').trim();
+    if(!v||v==='-'||v==='ـ'||v==='0') return;
+    const hl=h.toLowerCase();
+    if(contactKw.some(k=>hl.includes(k))||v.includes('@')||v.match(/^\+?[\d\s\-()+]{7,}$/)) contactFields.push(h);
+    else if(longKw.some(k=>hl.includes(k))||v.length>80) longFields.push(h);
+    else mainFields.push(h);
+  });
+
+  const renderField=(h,full=false)=>{
+    const v=(row[h]||'').trim();
+    const hl=h.toLowerCase();
+    const isType=['نوع','type','تصنيف'].some(k=>hl.includes(k));
+    const isStatus=['status','حالة'].some(k=>hl.includes(k));
+    const isEmail=v.includes('@');
+    const isPhone=!isEmail&&v.match(/^\+?[\d\s\-()+]{7,}$/);
+    let display=isType?typeBadgeHtml(v):isStatus?statusBadge(v):isEmail?`<a href="mailto:${v}">${v}</a>`:isPhone?`<a href="tel:${v}">${v}</a>`:v;
+    const isAccent=isType||isStatus;
+    return`<div class="detail-field${full?' full':''}${isAccent?' accent':''}">
+      <div class="detail-field-label">${h}</div>
+      <div class="detail-field-value">${display||'—'}</div>
+    </div>`;
+  };
+
+  // build hero section
+  const typeIcon=normType(type)==='مستلزمات طبية'?'🩺':normType(type)==='أدوية بيطرية'?'🐾':normType(type)==='مواد خام'?'🧪':'💊';
+  let html=`
+    <div class="detail-hero">
+      <div class="detail-hero-icon">${typeIcon}</div>
+      <div style="flex:1">
+        <div class="detail-hero-name">${name}</div>
+        ${loc?`<div class="detail-hero-loc">📍 ${loc}</div>`:''}
+        <div class="detail-hero-badges">
+          ${type?typeBadgeHtml(type):''}
+          ${status?statusBadge(status):''}
+        </div>
+      </div>
+    </div>`;
+
+  // main info section
+  if(mainFields.length){
+    html+=`<div class="detail-section">
+      <div class="detail-section-title">📋 المعلومات الأساسية</div>
+      <div class="detail-grid">${mainFields.map(h=>renderField(h)).join('')}</div>
+    </div>`;
+  }
+
+  // long content section
+  if(longFields.length){
+    html+=`<div class="detail-section">
+      <div class="detail-section-title">🏭 خطوط الإنتاج والأنشطة</div>
+      <div class="detail-grid">${longFields.map(h=>renderField(h,true)).join('')}</div>
+    </div>`;
+  }
+
+  // contact section
+  if(contactFields.length){
+    html+=`<div class="detail-section">
+      <div class="detail-section-title">📞 معلومات التواصل</div>
+      <div class="detail-grid">${contactFields.map(h=>renderField(h)).join('')}</div>
+    </div>`;
+  }
+
+  document.getElementById('dpBody').innerHTML=html;
+
+  // open detail page
+  const page=document.getElementById('detailPage');
+  page.classList.add('open');
+  page.scrollTop=0;
+  document.body.style.overflow='hidden';
+}
+
+function goBack(){
+  document.getElementById('detailPage').classList.remove('open');
+  document.body.style.overflow='';
+}
+
+document.addEventListener('keydown',e=>{if(e.key==='Escape') goBack();});
+
+// ── MOBILE DETECTION ──
+const isMobile = () => window.innerWidth <= 640;
+
+// Convert table to cards on mobile
+function mobileCardView(bodyId, headers) {
+  if (!isMobile()) return;
+  const tbody = document.getElementById(bodyId);
+  if (!tbody) return;
+  const rows = [...tbody.querySelectorAll('tr[data-search]')];
+  if (!rows.length) return;
+
+  // Replace table rows with card divs inside a wrapper
+  const wrap = tbody.closest('.table-wrap');
+  if (!wrap || wrap.dataset.cardified) return;
+  wrap.dataset.cardified = '1';
+
+  const cards = document.createElement('div');
+  cards.style.cssText = 'display:flex;flex-direction:column;gap:10px;padding:12px';
+
+  rows.forEach(row => {
+    const tds = [...row.querySelectorAll('td')];
+    const card = document.createElement('div');
+    card.dataset.search = row.dataset.search || '';
+    card.dataset.type   = row.dataset.type   || '';
+    card.style.cssText  = 'background:var(--white);border:1px solid var(--border);border-radius:12px;padding:13px 14px;box-shadow:0 1px 4px rgba(0,0,0,.06)';
+
+    // Title row (2nd td = name)
+    const name = tds[1]?.textContent?.trim() || '—';
+    const detailBtn = row.querySelector('.detail-btn');
+
+    card.innerHTML = `
+      <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:8px">
+        <div style="font-weight:700;font-size:.85rem;color:var(--text);flex:1;line-height:1.4">${name}</div>
+        ${detailBtn ? `<button class="detail-btn" style="flex-shrink:0">🔍</button>` : ''}
+      </div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:5px">
+        ${tds.slice(2, tds.length - 1).map((td, i) => {
+          const label = headers[i + 2] || '';
+          const val = td.innerHTML?.trim();
+          if (!val || val === '—') return '';
+          return `<div style="font-size:.73rem;background:var(--bg);border-radius:7px;padding:5px 8px;overflow:hidden">
+            <div style="color:var(--text3);font-size:.64rem;font-weight:700;margin-bottom:2px">${label}</div>
+            <div style="color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${val}</div>
+          </div>`;
+        }).join('')}
+      </div>`;
+
+    // Re-attach detail button event
+    const newBtn = card.querySelector('.detail-btn');
+    const origBtn = detailBtn;
+    if (newBtn && origBtn) {
+      newBtn.onclick = () => { newBtn._row = origBtn._row; newBtn._headers = origBtn._headers; openModal(newBtn); };
+    }
+    card.style.display = row.style.display; // respect filter state
+    cards.appendChild(card);
+    row._card = card; // link for filter sync
+  });
+
+  // hide table thead+tbody, show cards
+  wrap.querySelector('thead').style.display = 'none';
+  tbody.style.display = 'none';
+  wrap.appendChild(cards);
+  wrap._cards = cards;
+  wrap._rows  = rows;
+}
+
+// Sync card visibility with table filter
+const _origApplySearch = applySearch;
+function applySearch(tab) {
+  _origApplySearch(tab);
+  // sync card display
+  ['active','const','rejected','expired','contact','licenses'].forEach(key => {
+    const bodyId = key === 'const' ? 'constBody' :
+                   key === 'active' ? 'activeBody' :
+                   key + 'Body';
+    const wrap = document.getElementById(bodyId)?.closest('.table-wrap');
+    if (wrap && wrap._rows) {
+      wrap._rows.forEach(row => {
+        if (row._card) row._card.style.display = row.style.display;
+      });
+    }
+  });
+}
+
+loadAllSheets();
+</script>
+</body>
+</html>
