@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>🔥 Firestore Diagnostic</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Courier New',monospace;background:#0f172a;color:#e2e8f0;padding:20px;font-size:13px}
+h1{color:#38bdf8;font-size:1.1rem;margin-bottom:16px;font-family:sans-serif}
+.card{background:#1e293b;border:1px solid #334155;border-radius:10px;padding:16px;margin-bottom:12px}
+.card h2{font-size:.85rem;font-weight:700;margin-bottom:10px;font-family:sans-serif}
+.ok{color:#4ade80}.err{color:#f87171}.warn{color:#fbbf24}.info{color:#60a5fa}
+.log{background:#020617;border-radius:8px;padding:12px;white-space:pre-wrap;line-height:1.9;max-height:300px;overflow-y:auto}
+button{background:#1d4ed8;color:#fff;border:none;padding:9px 18px;border-radius:8px;cursor:pointer;font-size:.82rem;font-weight:700;margin:4px}
+button.green{background:#065f46}
+button.red{background:#7f1d1d}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(130px,1fr));gap:10px;margin-top:10px}
+.stat-box{background:#0f172a;border:1px solid #334155;border-radius:8px;padding:12px;text-align:center}
+.stat-num{font-size:1.8rem;font-weight:900;color:#38bdf8}
+.stat-lbl{font-size:.7rem;color:#94a3b8;margin-top:3px}
+.stat-box.empty .stat-num{color:#ef4444}
+</style>
+</head>
+<body>
+<h1>🔥 Firestore Diagnostic Tool — Medical Industries Dashboard</h1>
+
+<div class="card">
+  <h2>📡 اتصال Firebase</h2>
+  <div id="conn-status" class="log">⏳ جاري الاتصال...</div>
+</div>
+
+<div class="card">
+  <h2>📊 إحصائيات Collections</h2>
+  <div class="grid" id="stats-grid">
+    <div class="stat-box"><div class="stat-num" id="s-active">—</div><div class="stat-lbl">active</div></div>
+    <div class="stat-box"><div class="stat-num" id="s-construction">—</div><div class="stat-lbl">construction</div></div>
+    <div class="stat-box"><div class="stat-num" id="s-approvals">—</div><div class="stat-lbl">approvals</div></div>
+    <div class="stat-box"><div class="stat-num" id="s-licenses">—</div><div class="stat-lbl">licenses</div></div>
+    <div class="stat-box"><div class="stat-num" id="s-contact">—</div><div class="stat-lbl">contact</div></div>
+    <div class="stat-box"><div class="stat-num" id="s-compounding">—</div><div class="stat-lbl">compounding</div></div>
+    <div class="stat-box"><div class="stat-num" id="s-meta">—</div><div class="stat-lbl">_meta</div></div>
+  </div>
+</div>
+
+<div class="card">
+  <h2>🔍 فحص البيانات التفصيلي</h2>
+  <div>
+    <button onclick="checkActive()">🏭 فحص active</button>
+    <button onclick="checkAll()">🔄 فحص الكل</button>
+    <button onclick="testWrite()">✏️ اختبار الكتابة</button>
+    <button onclick="checkMeta()" class="green">📋 فحص _meta</button>
+    <button onclick="clearLog()" class="red">🗑 مسح</button>
+  </div>
+  <div id="log" class="log" style="margin-top:10px">// اضغط زر للبدء...\n</div>
+</div>
+
+<div class="card">
+  <h2>📄 عينة من البيانات</h2>
+  <div id="sample" class="log">// اضغط "فحص active" لرؤية عينة من البيانات</div>
+</div>
+
+<script type="module">
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getFirestore, collection, getDocs, doc, setDoc, deleteDoc, getDoc } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+const config = {
+  apiKey: "AIzaSyAwNa15e6566adQ__xrjsJkTOWFagKJGAc",
+  authDomain: "medical-industries-dashboard.firebaseapp.com",
+  projectId: "medical-industries-dashboard",
+  storageBucket: "medical-industries-dashboard.firebasestorage.app",
+  messagingSenderId: "1000146165997",
+  appId: "1:1000146165997:web:29a0c425060ed3a5ad2ce4"
+};
+
+const app = initializeApp(config);
+const db  = getFirestore(app);
+
+function log(msg, type='info'){
+  const el=document.getElementById('log');
+  const colors={ok:'#4ade80',err:'#f87171',info:'#60a5fa',warn:'#fbbf24'};
+  el.innerHTML += `<span style="color:${colors[type]||'#e2e8f0'}">${msg}</span>\n`;
+  el.scrollTop=el.scrollHeight;
+}
+function setStatus(msg, type='ok'){
+  const el=document.getElementById('conn-status');
+  const colors={ok:'#4ade80',err:'#f87171',warn:'#fbbf24'};
+  el.innerHTML=`<span style="color:${colors[type]}">${msg}</span>`;
+}
+window.clearLog=()=>{document.getElementById('log').innerHTML='';};
+
+// Auto-connect test
+async function autoConnect(){
+  try{
+    await getDocs(collection(db,'_meta'));
+    setStatus('✅ Firebase متصل بنجاح — project: medical-industries-dashboard','ok');
+    await checkAll();
+  }catch(e){
+    setStatus('❌ خطأ في الاتصال: '+e.message,'err');
+  }
+}
+
+window.checkAll = async function(){
+  const cols=['active','construction','approvals','licenses','contact','compounding','_meta'];
+  log('── فحص جميع Collections ──','warn');
+  for(const col of cols){
+    try{
+      const snap=await getDocs(collection(db,col));
+      const count=snap.size;
+      const el=document.getElementById('s-'+col.replace('_',''));
+      if(el){
+        el.textContent=count;
+        el.parentElement.className='stat-box'+(count===0?' empty':'');
+      }
+      if(count>0){
+        log(`✅ "${col}": ${count} سجل`, 'ok');
+        // Show field names from first doc
+        let firstDoc=null;
+        snap.forEach(d=>{if(!firstDoc)firstDoc=d;});
+        if(firstDoc&&firstDoc.id!=='_meta'){
+          const fields=Object.keys(firstDoc.data()).slice(0,6);
+          log(`   📌 أعمدة: ${fields.join(', ')}`, 'info');
+        }
+      } else {
+        log(`⚠️ "${col}": فارغ (0 سجلات)`, 'warn');
+      }
+    }catch(e){
+      log(`❌ "${col}": ${e.message}`, 'err');
+    }
+  }
+  log('── انتهى الفحص ──\n','warn');
+};
+
+window.checkActive = async function(){
+  log('── فحص تفصيلي لـ active ──','warn');
+  try{
+    const snap=await getDocs(collection(db,'active'));
+    log(`إجمالي السجلات: ${snap.size}`, snap.size>0?'ok':'err');
+    
+    const sample=[];
+    snap.forEach(d=>{
+      if(d.id!=='_meta')sample.push({id:d.id,...d.data()});
+    });
+    
+    if(sample.length>0){
+      const first=sample[0];
+      log(`\nأول سجل (ID: ${first.id}):`, 'info');
+      Object.keys(first).forEach(k=>{
+        const v=String(first[k]||'').substring(0,50);
+        log(`  ${k}: "${v}"`, 'info');
+      });
+      
+      // Show in sample box
+      document.getElementById('sample').innerHTML=
+        '<span style="color:#4ade80">عينة من البيانات (أول '+Math.min(3,sample.length)+' سجلات):</span>\n\n'+
+        sample.slice(0,3).map((r,i)=>{
+          const cols=['اسم الشركة (عربي)','Company Name','نوع المصنع','المحافظة','موقع المصنع','الحالة'];
+          return `[${i+1}] ${cols.map(c=>`${c}: "${r[c]||'—'}" `).join('\n    ')}`;
+        }).join('\n\n');
+    } else {
+      log('⚠️ لا توجد بيانات في active!', 'err');
+      log('💡 السبب المحتمل: البيانات محفوظة في collection مختلف', 'warn');
+      log('   جرب: اضغط "فحص الكل" لمعرفة أين البيانات', 'warn');
+      document.getElementById('sample').innerHTML='<span style="color:#f87171">❌ لا توجد بيانات في "active"</span>';
+    }
+  }catch(e){
+    log('❌ خطأ: '+e.message,'err');
+  }
+  log('── انتهى ──\n','warn');
+};
+
+window.testWrite = async function(){
+  log('── اختبار الكتابة والقراءة ──','warn');
+  try{
+    const testRef=doc(db,'_test','ping_'+Date.now());
+    await setDoc(testRef,{test:true,ts:new Date().toISOString(),msg:'diagnostic test'});
+    log('✅ الكتابة نجحت!','ok');
+    const snap=await getDoc(testRef);
+    log('✅ القراءة نجحت: '+JSON.stringify(snap.data()),'ok');
+    await deleteDoc(testRef);
+    log('✅ الحذف نجح — Firestore Rules تسمح بكل العمليات','ok');
+  }catch(e){
+    log('❌ فشل: '+e.message,'err');
+    if(e.message.includes('permission')){
+      log('🚨 المشكلة في Firestore Rules — يجب تغييرها إلى: allow read, write: if true;','warn');
+    }
+  }
+  log('── انتهى ──\n','warn');
+};
+
+window.checkMeta = async function(){
+  log('── فحص _meta (headers) ──','warn');
+  const cols=['active','construction','approvals','licenses'];
+  for(const col of cols){
+    try{
+      const m=await getDoc(doc(db,'_meta',col));
+      if(m.exists()){
+        const headers=m.data().headers||[];
+        log(`✅ _meta/${col}: ${headers.length} أعمدة → [${headers.slice(0,4).join(', ')}...]`, 'ok');
+      } else {
+        log(`⚠️ _meta/${col}: غير موجود — الداشبورد قد لا يعرف الأعمدة`, 'warn');
+      }
+    }catch(e){
+      log(`❌ _meta/${col}: ${e.message}`, 'err');
+    }
+  }
+  log('── انتهى ──\n','warn');
+};
+
+// Start
+autoConnect();
+</script>
+</body>
+</html>
