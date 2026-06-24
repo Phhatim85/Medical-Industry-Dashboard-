@@ -1694,27 +1694,34 @@ async function loadData(force){
    HELPERS
 ══════════════════════════════════════ */
 function normType(t){
-  if(!t)return'أخرى';
-  var s=t.trim();var tl=s.toLowerCase();
-  // Check medical devices first (more specific)
-  if(s.includes('أجهزة')||s.includes('مستلزمات')||s.includes('جهاز')||
-     tl.includes('device')||tl.includes('medical device')||tl.includes('equipment'))
+  if(!t||String(t).trim()==='')return'أخرى';
+  var s=String(t).trim();var tl=s.toLowerCase();
+  // Medical devices (check before pharma to avoid مستحضر confusion)
+  if(s.includes('أجهزة')||s.includes('مستلزمات')||s.includes('جهاز طبي')||
+     tl.includes('device')||tl.includes('equipment')||tl.includes('medical supply'))
     return'أجهزة ومستلزمات طبية';
   // Veterinary
-  if(s.includes('بيطر')||tl.includes('vet'))return'أدوية بيطرية';
+  if(s.includes('بيطر')||tl.includes('veterinar')||tl.includes(' vet '))
+    return'أدوية بيطرية';
   // Raw materials
   if(s.includes('مواد خام')||s.includes('مواد فعالة')||s.includes('مواد أولية')||
-     tl.includes('raw material')||tl.includes('active pharmaceutical')||tl.includes('api'))
+     s.includes('خامات')||tl.includes('raw material')||tl.includes('api')||
+     tl.includes('active pharmaceutical ingredient')||
+     (s.includes('مواد')&&(s.includes('صيدل')||s.includes('دوائ'))))
     return'مواد خام';
-  // Pharmaceuticals - broad match
+  // Pharmaceuticals - very broad
   if(s.includes('أدوية')||s.includes('دواء')||s.includes('دوائ')||
      s.includes('صيدل')||s.includes('مستحضر')||s.includes('دوائية')||
-     s.includes('تغليف')||s.includes('packaging')||
-     tl.includes('pharma')||tl.includes('tab')||tl.includes('cap')||
-     tl.includes('inject')||tl.includes('parenteral')||tl.includes('iv sol')||
-     tl.includes('finished')||tl.includes('secondary packaging')||
-     tl.includes('dosage'))
+     s.includes('تغليف')||s.includes('pharmaceutical')||s.includes('pharma')||
+     tl.includes('pharma')||tl.includes('medicine')||tl.includes('drug')||
+     tl.includes('tab')||tl.includes('capsule')||tl.includes('inject')||
+     tl.includes('parenteral')||tl.includes('iv solution')||tl.includes('packaging')||
+     tl.includes('dosage')||tl.includes('finished product')||
+     s.includes('بشرية')||s.includes('علاجي'))
     return'أدوية';
+  // If still unknown but has medical keywords
+  if(tl.includes('medical')||tl.includes('health')||s.includes('طبي')||s.includes('صحي'))
+    return'أجهزة ومستلزمات طبية';
   return'أخرى';
 }
 function typeLabel(t){if(LANG==='en'){var m={'أدوية':'Pharmaceuticals','أجهزة ومستلزمات طبية':'Medical Devices','أدوية بيطرية':'Vet. Drugs','مواد خام':'Raw Materials','أخرى':'Other'};return m[t]||t;}return t;}
@@ -1745,11 +1752,19 @@ function renderPageSummary(pageKey,colKey){
     return;
   }
 
-  // Count by type
-  var tc=findCol(d.h,'نوع','type')||'';
+  // Count by type - check multiple possible field names
+  var tc=findCol(d.h,'نوع المصنع','نوع','type','category')||
+         (d.h.find(function(h){return h&&h.includes('نوع');})||'');
   var counts={};
   d.r.forEach(function(r){
-    var rawVal=tc?r[tc]:'';
+    // Try tc first, then any field with نوع in name
+    var rawVal='';
+    if(tc&&r[tc])rawVal=String(r[tc]);
+    if(!rawVal){
+      Object.keys(r).forEach(function(k){
+        if(!rawVal&&k&&k.includes('نوع')&&r[k])rawVal=String(r[k]);
+      });
+    }
     var t=normType(rawVal)||'أخرى';
     counts[t]=(counts[t]||0)+1;
   });
@@ -2368,7 +2383,9 @@ function renderTable(pageKey,data,colKey){
   d.r.forEach(function(row,i){
     var tr=document.createElement('tr');
     tr.setAttribute('data-search',Object.values(row).join(' ').toLowerCase());
-    var _rawType=tc?row[tc]:'';
+    var _rawType='';
+    if(tc&&row[tc])_rawType=String(row[tc]);
+    if(!_rawType){Object.keys(row).forEach(function(k){if(!_rawType&&k&&k.includes('نوع')&&row[k])_rawType=String(row[k]);});}
     var _normType=normType(_rawType);
     tr.setAttribute('data-type',_normType);
     tr.setAttribute('data-type-raw',_rawType);
