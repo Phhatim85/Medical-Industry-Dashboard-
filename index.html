@@ -555,6 +555,22 @@ body.admin-mode .drag-item:hover .card{box-shadow:var(--shadow-md)}
 .gmp-box{border-radius:8px;padding:9px;text-align:center;flex:1}
 .gmp-num{font-size:1.5rem;font-weight:900;line-height:1.1}
 .gmp-lbl{font-size:.62rem;font-weight:700;margin-top:2px}
+
+/* ═══ RESPONSIVE OVERVIEW ═══ */
+/* Tablet (769px - 1024px) */
+@media(max-width:1024px) and (min-width:769px){
+  #ov-kpi-grid{grid-template-columns:repeat(3,1fr)!important}
+  #ov-charts-row{grid-template-columns:1fr 1.2fr 1fr!important}
+  #ov-analytics-row{grid-template-columns:1fr 1fr!important}
+}
+/* Mobile (≤768px) */
+@media(max-width:768px){
+  #ov-kpi-grid{grid-template-columns:1fr 1fr!important}
+  #ov-charts-row{grid-template-columns:1fr!important}
+  #ov-bottom-row{grid-template-columns:1fr!important}
+  #ov-analytics-row{grid-template-columns:1fr!important}
+  [data-analytics="growth"]{width:100%!important}
+}
 </style>
 <!-- Firebase SDK -->
 <script type="module">
@@ -817,7 +833,7 @@ window.addEventListener('load',()=>{if(typeof loadAllSheets==='function')loadAll
 
 
   <!-- ── ANALYTICS ROW ── -->
-  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px;align-items:start" id="ov-analytics-row">
+  <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-bottom:14px;align-items:start" id="ov-analytics-row" style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px;margin-top:16px;margin-bottom:14px;align-items:start">
     <div class="an-card" data-analytics="gmp">
       <div class="an-card-title">🏅 حالة شهادات GMP</div>
       <div style="display:flex;gap:6px;margin-bottom:8px">
@@ -847,7 +863,7 @@ window.addEventListener('load',()=>{if(typeof loadAllSheets==='function')loadAll
   </div>
 
   <!-- ── GROWTH ROW ── -->
-  <div class="an-card" style="margin-bottom:14px" data-analytics="growth">
+  <div class="an-card" style="margin-bottom:14px;display:block" data-analytics="growth">
     <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
       <div class="an-card-title" style="margin:0">📈 نمو المصانع القائمة — سنوياً</div>
       <div style="font-size:.68rem;color:var(--text3)" id="an-growth-range"></div>
@@ -1404,6 +1420,16 @@ function goPage(name,btn){
   }
   if(name==='admin'&&ADMIN_UNLOCKED){switchAdminTabTo(ADMIN_COL);}
   if(name==='overview'){renderMap();}
+  // Re-render page if data exists but table is empty
+  var pageColMap={industries:'active',construction:'construction',approvals:'approvals',licenses:'licenses',contact:'contact',compounding:'compounding'};
+  var col=pageColMap[name];
+  if(col&&DATA[col]&&DATA[col].r&&DATA[col].r.length>0){
+    var tbody=document.getElementById('tb-'+name);
+    if(tbody&&tbody.children.length<=1){ // 0 or 1 row (could be "no data" row)
+      if(name==='compounding')renderCompoundingPage();
+      else renderPage(name,DATA[col],col);
+    }
+  }
 }
 
 /* ══════════════════════════════════════
@@ -1516,12 +1542,13 @@ async function loadData(force){
       DATA[col]={h:[],r:[]};
     }
   }
+  // Debug: log counts before renderAll
+  var total=Object.values(DATA).reduce(function(s,d){return s+(d.r?d.r.length:0);},0);
+  toast(total>0?'✅ تم تحميل '+total+' سجل ('+DATA.active.r.length+' مصنع)':'⚠️ لا توجد بيانات — أضف من لوحة الإدارة');
   renderAll();
   var now=new Date();
   var el=document.getElementById('lastUpdated');
   if(el)el.textContent=now.toLocaleDateString('ar-OM',{day:'numeric',month:'short',year:'numeric'});
-  var total=Object.values(DATA).reduce(function(s,d){return s+(d.r?d.r.length:0);},0);
-  toast(total>0?'✅ تم تحميل '+total+' سجل':'⚠️ لا توجد بيانات — أضف من لوحة الإدارة');
 }
 
 /* ══════════════════════════════════════
@@ -1672,7 +1699,7 @@ function renderKeyInsights(ac,cc,apc,tot){
   el.innerHTML=insights.map(function(ins){
     return'<div style="display:flex;align-items:flex-start;gap:10px;padding:9px 11px;background:var(--bg);border-radius:8px;border:1px solid var(--border)">'
       +'<span style="font-size:1.1rem;flex-shrink:0;margin-top:1px">'+ins.ico+'</span>'
-      +'<span style="font-size:.76rem;color:var(--text2);font-weight:500;line-height:1.55">'+ins.txt+'</span>'
+      +'<span style="font-size:.78rem;color:var(--text2);font-weight:500;line-height:1.6">'+ins.txt+'</span>'
       +'</div>';
   }).join('');
 }
